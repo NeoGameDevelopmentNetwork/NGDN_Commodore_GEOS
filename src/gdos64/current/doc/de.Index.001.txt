@@ -1,0 +1,61 @@
+﻿; UTF-8 Byte Order Mark (BOM), do not remove!
+;
+; Area6510 (c) by Markus Kanet
+;
+; This file is used to document the source code, not for
+; creating an executable program.
+;
+
+	`3f1`40100
+	`3c1`40101
+	`3c1`40102
+	`3b1`40103
+	`301`40104
+____________________________________
+
+	Bitte einen "Hilfe-Button" anklicken:
+____________________________________
+
+	`1`351`40200Informtionen zum
+	`1`351`40201Hilfesystem von GDOS64
+
+	`1`321`40200Informationen zu
+	`1`321`40201GDOS64 `2(unvollständig)`
+
+	`1`341`40200Informationen zu
+	`1`341`40201GD.CONFIG `2(unvollständig)`
+____________________________________
+
+`2*** Seitenende ***`
+
+§§§
+"de.HilfeSystem",02
+"de.HilfeSystem",02
+"de.Index.001",02
+"de.Index.001",02
+"de.GD.CONFIG",02
+"de.GD.CONFIG",02
+
+§§§
+                <MISSING_IMAGE_DATA>
+
+                <MISSING_IMAGE_DATA>
+
+§§§
+
+`2Hinweis`
+
+Diese Datei enthält keine weiteren Textseiten. Diese
+Datei dient lediglich als übergeordnetes Verzeichnis
+zu anderen Dokumenten.
+
+Zur Titelseite zurück mit ^`1Übersicht`
+
+`2*** Seitenende ***`
+
+§§§
+"de.Index.001",01
+
+§§§
+
+§§§

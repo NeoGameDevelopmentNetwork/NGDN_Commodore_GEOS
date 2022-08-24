@@ -1,0 +1,1991 @@
+GeoDesk64/MegaPatch updated.
+Updated Sun Aug 21 13:58:42 2022
+--
+Updated GeoDesk64 source code and documentation:
+ => /src/geodesk64/current
+ => /usr/sources/geodesk64/latest
+
+Added a new snapshot GeoDesk64 v1.065:
+ => /usr/snapshots/geodesk64/latest
+
+Bugs fixed:
+* Fixed a stupid copy'n'paste bug in file
+  properties that could cause a "File not found"
+  error when saving the changes.
+* Fixed some typos in error messages.
+
+Updated MegaPatch source code and documentation:
+ => /src/megapatch64_128/latest
+ => /usr/sources/megapatch64_128/latest
+
+Added a new snapshot for MegaPatch 64/128 V3.3r10:
+ => /usr/snapshots/megapatch64_128/latest
+
+Bugs fixed:
+* Backported the TaskManager fix from GDOS64 when
+  open a document and the application is missing.
+  Note: If that happens the document will not be
+  opened, but there will be no error dialog box:
+  Since this bug was undiscovered since 1999 it is
+  not worth spending time in an extra dialog box.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Aug 20 21:12:54 2022
+--
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Aug 20 19:39:20 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Some UI fixes for GD.CONF.GEOS.
+
+Bugs fixed:
+* Fixed a bug in english version of GDOS64 and
+  GD.CONF.GEOS: The Name of the Desktop was not
+  iumported correct to the register menu.
+  Note: This requires a new GD.INI version: Older
+  versions of the configuration will be replaced
+  and the configuration will be set to defaults.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Aug 20 13:36:12 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Open a new document from the TaskManager
+  without the required application being
+  available on any drive will cause a crash.
+  A new task has been added to the list of
+  active tasks but the new task does not
+  have an application running. Returning to
+  this task may cause a crash.
+  Added an error dialog box to indicate why
+  the document was not opened.
+  Note: This applies to MegaPatch 3.3r10 also!
+  The invalid task should be deleted from the
+  task menu until the fix has been backported.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Aug 20 07:24:52 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added new filter mode for borderblock files:
+    >>Filter -> Other files -> Borderblock
+* Added a small status icon to the end of the
+  info/status line of the current window:
+    * = Geos disk
+    - = Non-GEOS disk
+
+Development:
+* Removed deprecated source code file for GeoDesk
+  ShortCuts (now included in s.GD.3C.ShortCut).
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Aug 19 18:43:43 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Remove check for GeoDesk from "Save config"
+  menu: The configuration will be saved to the
+  GD.INI file on the boot device.
+  Also updated the error dialog box.
+
+Development:
+* Make shortcut defintion a new sub-module to
+  save some core application memory.
+* Move GeoDesk application/boot information to
+  the temporary configuration area. This will
+  free up some memory in the system area to add
+  new GeoDesk modules.
+* Removed deprecated configuration files from
+  the GeoDesk source code.
++--------------------+
+++
+GDOS64 updated.
+Updated Thu Aug 18 21:49:48 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Various code cleanups.
++--------------------+
+++
+GDOS64 updated.
+Updated Thu Aug 18 07:18:23 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Improved compatibility for GeoDesk and copying
+  or deleting native mode subdirectories after
+  border block update.
+  When copying subdirectories with ":GetNxtDirEntry"
+  GEOS appends the border block to the end of the
+  current directory and sets an internal flag that
+  the border block is now active.
+  When switching between the source and destination
+  drive, this flag is reset and the border block
+  is appended to the current directory again.
+  This will cause ":GetNxtDirEntry" to return the
+  files in the current border block again.
+  When deleting subdirectories recursively this
+  will also delete the files in the border block.
++--------------------+
+++
+GDOS64 updated.
+Updated Wed Aug 17 07:30:57 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Improved compatibility with other DeskTop
+  applications after BorderBlock update.
++--------------------+
+++
+GDOS64 updated.
+Updated Tue Aug 16 21:55:44 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Various code cleanups, corrections and typos
+  removed. No new features but lots of testing
+  on C64+TC64v2+SD2IEC+CMDFD.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Aug 14 21:04:16 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* In some really rare conditions TaskManager may
+  cause a crash after a new drive got installed.
+  Use a "SwapFile" in the GEOS-DACC to backup the
+  current TaskManager menu when install a new drive
+  using GD.CONFIG.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Aug 14 17:37:08 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added experimental support for border block
+  within native-mode sub-directories.
+  On native-mode disk drives this will make it
+  possible to have up to 8 files available in all
+  sub-directories. This might be helpful if you
+  have multiple directories containing geoWrite-
+  documents: Add GeoWrite to the BorderBlock and
+  GeoWrite will be listed in all sub-directories.
+  Currently only a simple "Add/remove to/from the
+  Borderblock" is available from the popup menu
+  to add files to the borderblock. Better menu
+  options may follow.
+  To make this possible a lot of changes to the
+  native-mode disk drivers had to be done.
+  Therefore a lot of testing is needed.
+* When converting a disk into a "non-GEOS" disk
+  do not delete files from the borderblock but
+  move them back into the root directory.
+* When open disk properties do not automatically
+  load the disk/file statistics since that will
+  take a long time on native-mode disk drives.
+* Allow switching partitions from the disk-
+  properties window. Note: This has no effect to
+  the drive window itself. It is just an easy
+  way to check multiple partitions.
+
+Bugs fixed:
+* When open disk properties from a native-mode
+  sub-directory, the drive window will not be
+  updated properly (Wrong disk name/file list).
+* Set max. files in the current window when
+  using shortcuts.
+  This caused some file operations to abort
+  because the file count was 0.
+* The GEOS routine "ChkDkGEOS" was directly
+  testing the BAM in ":curDirHead" instead of
+  using a vector in ":r5".
+* When using "SetGEOSDisk" directly open the
+  root directory on native-mode disk drives
+  instead of returning an error.
+* When converting a disk into a "non-GEOS" disk
+  delete all GEOS data from the directory header.
++--------------------+
+++
+GDOS64 updated.
+Updated Wed Aug 10 22:48:34 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Development:
+* Fixed some comments, code cleanup.
++--------------------+
+++
+GDOS64/GeoDesk64 updated.
+Updated Wed Aug 10 14:44:52 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Fixed a bug GeoDesk64 that caused file properties
+  to print a warning message about renaming files.
+* More disk driver fixes. A similar issue that caused
+  problems on CMD RAMLink and GeoDOS64 when switching
+  partitions did exist on other drivers also but did
+  not cause any (known) issues.
+  Anyway, the code has been fixed to avoid other
+  problems in the future.
+  The same code does also exist in GEOS/MegaPatch but
+  since it does not have caused any issues here in the
+  past few years it will not be fixed.
+
+
+Updated GeoDesk64 source code and documentation:
+ => /src/geodesk64/current
+ => /usr/sources/geodesk64/latest
+
+Changes:
+* Backported the file properties fix from GDOS64.
+  The bug does not cause any problems in the
+  stand-alone release of GeoDesk64, but it is a
+  stupid copy'n'paste error that need to be fixed.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Aug  7 22:25:25 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Revert a fix for CMD RAMLink disk drivers
+  that caused issues with switching partitions
+  using GEOS routine ":OpenPartition".
+  This should fix issues with GeoDOS64 V2.x and
+  switching partitions.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Aug  7 17:24:17 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* New Module: Rename CMD partitions.
+  Rename CMD partitions on CMD FD/HD/RL drives.
+  Optionally the disk name can be renamed to
+  match the new partition name.
+  This feature is available after installation with
+  GEODESK.mod by right-clicking to the title of the
+  current window and selecting "Rename partition".
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Aug  5 07:46:42 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* If boot disk driver was not loaded into RAM
+  search for the required disk driver on the
+  boot disk.
+  Print extra status info during boot if that
+  happens.
+* Change drive color during boot if device can
+  not be found. If the configuration is valid
+  the system will continue to boot.
+  If the missing device is between other GEOS
+  drives you will get asked to fix the system
+  configuration and GD.CONFIG will start.
++--------------------+
+++
+GDOS64 updated.
+Updated Tue Aug  2 08:25:57 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Bugs fixed:
+* During update switching to partition #0 caused
+  an setup error on CMD-FD/HD. Switching partition
+  is only required for CMD-RL.
+* GD.CONFIG was missing the last disk driver in the
+  driver list (CMD-HDNM).
+* Update may crash on CMD-HD during GD.CONFIG when
+  loading GeoHelp. The problem is temporary fixed
+  but further investigation is needed.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jul 31 19:05:38 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Updated CBM/Drive menu UI.
+* Added CBM/Drive menu to the GeoDesk help page.
+* Added pause function to view directory when
+  using CBM/Directory or CBM/Send command.
+  Press SPACE to stop the directory listing and
+  press SPACE or RUN/STOP to continue.
+
+Bugs fixed:
+* Fixed wrong menu size in english GDOS64 and
+  CBM/Drive menu.
+
+Development:
+* Fixed various source code typos and errors.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jul 31 13:27:34 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added value edit icons for easy editing date and
+  time in file info (+/-1 using up/down arrows).
+* Updated some icons in GeoDesk file info to match
+  the look of GD.CONFIG.
+
+Development:
+* Use the automatic update feature from the register
+  menu if an menu icon was selected. This will make
+  the code smaller and more simple.
+* Renamed some icon label names.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Jul 30 23:22:15 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* GeoHelp was designed as a stand-alone-application
+  for GEOS. Removed deprecated swap file printer code.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Jul 30 19:51:29 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Changes:
+* Set default spooler delay to 15secs.
+
+Bugs fixed:
+* Fixed uninitialized delay for printer spooler
+  during boot.
+* Fixed loading spooler printer device.
+* GeoHelp crashed when a CMD device was configured
+  but is not available when launching GeoHelp.
+* Set default spooler size if no spooler ram
+  has been configured.
+* Fixed screen garbage when select a new device or
+  partition for GeoHelp files in GD.CONFIG (caused by
+  a missing filename buffer for DBUSRFILES).
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Jul 29 23:18:35 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Note: This is an highly experimental build!
+A lot of changes and fixes got added to GDOS64.
+See previous commits for a list of changes.
+
+Changes:
+* Added "Reload drive list" to GD.CONF.DRIVES for
+  "Drives" and "System" tab.
+
+Bugs fixed:
+* If a new disk drive can not be installed using
+  GD.CONF.DRIVES reset the selected drive to
+  "No drive".
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Jul 29 07:35:12 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Adding drive icons to GD.FBOOT when the
+  application is started from the GEOS desktop.
+  You can choose between drives A: to D:, but
+  FBOOT should be used with RAM drives like
+  RAM1541 or RAMNative.
+  Therefore other drive types are grayed out from
+  the FBOOT menu, but can still be selected.
++--------------------+
+++
+GDOS64 updated.
+Updated Thu Jul 28 20:28:17 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Some small UI/setup fixes and improvments.
++--------------------+
+++
+GDOS64 updated.
+Updated Thu Jul 28 00:00:46 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* When a new drive is installed for the CMD RAMLink,
+  the RAMLink device address is no longer searched
+  if another RAMLink drive is already installed.
+  This should speed up booting GEOS.
+* Check for default address when searching for any
+  CMD RAMLink device.
+* Only check one character when testing the device
+  connected to the serial bus, e.g. "R" = RAMLink.
+* Do now load all RAMLink partitions for all
+  GEOS RAMLink disk drives.
+  This should speed up booting GEOS.
+* Keep GD/GD.RBOOT/GD.FBOOT in sync and print the
+  same boot messages.
+* Set default year to 2022 during boot.
+* Update GEOS kernal in DACC only once during boot.
+  This should speed up booting GEOS.
+* Updated some source code comments.
+* Search for disk drivers during boot using a fast
+  directory check. Load disk drivers using cached
+  track/sector address.
+  This should speed up booting GEOS.
+* Reduce usage/calls of ":OpenDisk". this does check
+  for a new disk and also will calculate the remaining
+  free disk space. Noot needed during boot.
+  This should speed up booting GEOS.
+* Improved "loading disk drivers to RAM" by using
+  cached track/sector address for the disk drivers.
+  This should speed up booting GEOS.
+* Improved loading GD.CONFIG modules by using cached
+  track/sector address for the config modules.
+  This should speed up booting GEOS.
+* Updated INIT modules for GD.CONFIG.
+
+Development:
+* Removed RAM disk drivers from testing kernal ROM disk
+  drivers (RAM devices do always use FAST mode).
+* Initialize RAMLink disk driver when using ":EnterTurbo",
+  ":NewDisk", ":OpenDisk" or ":OpenPartition".
+* Removed some deprectaed code.
++--------------------+
+++
+MegaAssembler updated.
+Updated Sat Jul 23 12:23:12 2022
+--
+Re-uploaded latest MegaAssembler D64 disk images to
+see if that will fix the download issues on bitbucket.
++--------------------+
+++
+MegaAssembler updated.
+Updated Sat Jul 23 12:03:06 2022
+--
+Updated MegaAssembler source code V4.7.
+ => /usr/sources/megaassembler/v4.7
+ => /src/megaassembler
+
+Bugs fixed:
+* Fixed forward branch target with exact 128 bytes.
+  This will not cause an error but will create an
+  backward branch target.
++--------------------+
+++
+GDOS64 updated.
+Updated Tue Jul 19 21:53:51 2022
+--
+Re-uploaded latest GDOS64 snapshot to see if that
+will fix the download issues on bitbucket.
++--------------------+
+++
+README files updated.
+Updated Mon Jul 18 19:38:18 2022
+--
+Updated some README files.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jul 17 18:29:02 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Do not load printer and mouse driver during
+  boot and let GD.CONFIG install the selected
+  drivers.
+* Load the GDOS kernal with the installed GEOS
+  disk driver. This change will require more
+  testing but was another part to speed up
+  booting into GDOS64.
+  I have compared this release with r220630 and
+  MegaPatch 3.3r10 with GeoDesk64 and GDOS64 is
+  about 25% faster on a stock C64 system without
+  any fastloader like JiffyDOS. And GDOS64 has
+  to load much more features into RAM!
+  It is still horrible slow without JiffyDOS or
+  any kind of Turbo hardware, but in that case
+  FBOOT can be used. You can also disable some
+  features to speed up loading.
+  When using a fastloader or Turbo hardware the
+  improvements will not make a big difference.
+
+Bugs fixed:
+* When using FBOOT to fast boot from a GEOS
+  RAM disk the reserved 320K DACC memory for
+  GeoDesk will not be allocated again.
+  Since this would also affect for example
+  TopDesk with RAM-TopDesk enabled, the best
+  thing we can do is to install the original
+  kernal routine for EnterDeskTop and let FBOOT
+  load the configured desktop again.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sun Jul 17 10:23:55 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added info about "M-R"-Emulation for SD2IEC.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jul 17 00:05:05 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Added more adjustments to speed up the GDOS64
+boot process.
+Booting GDOS64 will always be slower compared
+to GEOS V2 but with this update the boot process
+might be a little bit faster then before.
+
+Note:
+A lightweight 1541 fast boot disk might be
+possible but can not be recommended.
+If you want to fast boot GDOS64 without a boot
+floppy using extra hardware like an Ultimate or
+TC64 it is recommended to use the GD.FBOOT
+utility and a saved GEOS/DACC image:
+
+Create a RAMDisk on GEOS drive A: including
+all system/boot files. Make sure to save the
+configuration. When using an Ultimate or TC64
+save the content of the REU/GeoRAM to disk.
+Copy GD.FBOOT to the SD card on the Ultimate
+or TC64 (rename it to GD.FBOOT.PRG).
+To boot into GDOS64 launch/execute GD.FBOOT
+from the SD card while content of the REU or
+GEORAM has already been loaded.
+
+Tested with TC64v2 and a 4Mb GeoRAM as GEOS
+DACC and a 16Mb C=REU. System is ready after
+5 seconds without using a real boot disk.
+
+Changes:
+* Some error messages have been corrected.
+* Split GD.CONFIG modules into configuration
+  and installation parts. This should make
+  loading GDOS64 a little bit faster since
+  no configuration menus will be loaded on
+  GEOS bootup anymore (except for the drive
+  configuration).
++--------------------+
+++
+MegaAssembler updated.
+Updated Thu Jul 14 19:15:56 2022
+--
+Updated MegaAssembler source code V4.6.
+ => /usr/sources/megaassembler/v4.6
+ => /src/megaassembler
+
+Bugs fixed:
+* Fixed a bug that will cause MegaAssembler
+  to return to desktop when trying to open a
+  symbol table, source code or error file on
+  drive A: using geoWrite if all drives are
+  RAM disk drives.
+
+Development:
+* Use dataFileName/dataDiskName when open
+  geoWrite documents from the geoWrite menu.
+* Merged duplicate code when open a symbol
+  table, source code or error file from the
+  geoWrite menu.
++--------------------+
+++
+GeoDesk64 updated.
+Updated Thu Jul 14 13:47:21 2022
+--
+Updated GeoDesk64 source code and documentation:
+ => /src/geodesk64/current
+ => /usr/sources/geodesk64/latest
+
+Changes:
+* Some error messages have been corrected.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jul 10 22:41:21 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Do not search for the application when trying
+  to open a document with no application name.
+* Set correct filename when searching for the
+  configuration modules in GD.CONFIG.
+* Removed deprecated debugging data.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jul 10 02:03:40 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Working on speed up booting GDOS64.
+  With these fixes booting from 1581 is about
+  12% faster.
+  GEOS V2 can't be beaten, but there is still
+  some room for optimizations.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Jul  9 16:16:25 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* GD.CONF.TASKMAN/GD.CONF.SPOOLER:
+  Make these modules VLIR applications and move
+  data code into separate VLIR modules.
+  This prevents the loading of data both during
+  the boot process and when configuring these
+  features with GD.CONFIG.
+  First work on trying to speed up booting GDOS64.
+* Revert changes on default settings for GDOS64
+  and GEODESK to more user friendly values.
++--------------------+
+++
+MegaAssembler updated.
+Updated Sat Jul  9 15:51:39 2022
+--
+Updated MegaAssembler source code V4.5.
+ => /usr/sources/megaassembler/v4.5
+ => /src/megaassembler
+
+Changes:
+* Copy info text from first module when
+  linking VLIR applications if no info text
+  has been defined using the h opcode.
++--------------------+
+++
+GDOS64 updated.
+Updated Thu Jul  7 19:08:47 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added "Send command" menu.
+  With this menu it is possible to send drive
+  commands to any drive connected to the C64
+  even if the drive is not configured for GEOS.
+  Can be used to switch the directory on other
+  SD2IEC drives or the Vice/FS directory before
+  sending files using the "Send to" menu.
+  You can also check the drive status, query
+  extended settings from an SD2IEC drive or
+  list the directory of the drive using PETSCII
+  or ASCII mode.
+  To open the CBM utilities menu hold down the
+  C= key and right click inside of a window.
+
+  NOTE: Make sure that you have set an absolute
+  path for REU/GeoRAM/RAMLink images in VICE
+  when switching the directory on a Vice/FS
+  file system or VICE will save the ram image
+  to the directory you have changed into using
+  the "Send command" menu!
+
+Bugs fixed:
+* Display required disk space for custom
+  installation mode during setup.
+* Do not reserve more ram than available.
+  This caused a "free" GEOS system bank #0
+  on systems with 512Kb RAM only.
+* Do not display BASIC drectory using the
+  CBM disk utilities if no disk is in drive.
++--------------------+
+++
+MegaPatch updated.
+Updated Fri Jul  1 08:27:38 2022
+--
+New SnapShot for MegaPatch 64/128 V3.3r10:
+ => /usr/snapshots/megapatch64_128/latest
+
+Bugs fixed:
+* geoPaint128 may crash with MegaPatch128 when
+  using the TaskManager since v3.3r9.
+  This may also affect other applications which
+  are using a custom interrupt routine.
+  MegaPatch64 may also be affected depending on
+  the applications used with the TaskManager.
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Jul  1 06:51:47 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Some applications may crash with GDOS64 when
+  using the TaskManager and applications using
+  a custom interrupt routine.
+  Fix backported from MegaPatch 3.3r10.
+
+Development:
+* Updated some comments and optimized some
+  code in TaskManager.
++--------------------+
+++
+MegaPatch updated.
+Updated Thu Jun 30 21:01:14 2022
+--
+Updated MegaPatch source code and documentation:
+ => /src/megapatch64_128/current
+ => /usr/sources/megapatch64_128/latest
+
+Bugs fixed:
+* geoPaint128 may crash with MegaPatch128 when
+  using the TaskManager since v3.3r9.
+  This may also affect other applications which
+  are using a custom interrupt routine.
+  MegaPatch64 may also be affected depending on
+  the applications used with the TaskManager.
++--------------------+
+++
+MegaPatch updated.
+Updated Thu Jun 30 07:00:33 2022
+--
+New SnapShot for MegaPatch 64/128 V3.3r10:
+ => /usr/snapshots/megapatch64_128/latest
+
+Bugs fixed:
+* Insert photo scrap to geoWrite document may
+  cause a BAD BAM if application and document
+  drive are different and drive type is 1581 or
+  native mode.
+
+Known issues:
+* MegaPatch128 may crash when using TaskManager and
+  geoPaint128 and trying to switch to another task.
+  This seem to be an issue with geoPaint128 since
+  geoPaint64 seem to work. Needs more testing...
++--------------------+
+++
+MegaPatch updated.
+Updated Wed Jun 29 20:16:37 2022
+--
+Updated MegaPatch source code and documentation:
+ => /src/megapatch64_128/current
+ => /usr/sources/megapatch64_128/latest
+
+Bugs fixed:
+* Insert photo scrap to geoWrite document may
+  cause a BAD BAM if application and document
+  drive are different and drive type is 1581 or
+  native mode.
+
+Development:
+* Improve code quality and compatibility with
+  GEOS V2.
++--------------------+
+++
+GDOS64 updated.
+Updated Wed Jun 29 19:54:43 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Development:
+* Optimized code for VLIR file handling.
++--------------------+
+++
+GDOS64 updated.
+Updated Tue Jun 28 22:00:53 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Insert photo scrap to geoWrite document may
+  cause a BAD BAM if application and document
+  drive are different and drive type is 1581 or
+  native mode.
+
+Development:
+* Improve code quality and compatibility with
+  GEOS V2.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jun 26 21:20:36 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added new CBM utility menu.
+  C= + right click will display a new menu:
+  - Directory
+    Display directory of the selected drive
+    connected to the serial bus.
+  - Send command
+    Send a floppy command to the selected drive.
+    Coult be used to enable ROOT on Vice/FS and
+    SD2IEC devices.
+    * WORK IN PROGRESS *
+  Not yet completed, but displaying directory of
+  a Vice/FS file system will work.
+  Hit CTRL to slow down the directory listing and
+  press RUN/STOP to abort.
+
+Development:
+* Merge duplicate decimal-ascii-convertion
+  tables between kernal and register menu.
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Jun 24 23:14:41 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Make all disk drivers optional when using custom
+  setup. Check yourself twice if you have selected
+  the required disk drivers to be installed.
+* Removed deprected setup messages.
+* Updated 'Send to...' when sending geoWrite files
+  to a printer device.
+
+Bugs fixed:
+* Fixed some typos.
++--------------------+
+++
+GeoDesk64 updated.
+Updated Fri Jun 24 22:42:41 2022
+--
+Updated GeoDesk64 source code and documentation:
+ => /src/geodesk64/current
+ => /usr/sources/geodesk64/latest
+
+Bugs fixed:
+* Fixed build with MegaAss V4.4 and
+  pseudo opcode testing enabled.
+* Fixed some typos.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jun 19 21:04:22 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Improved UTF-8 convertion when using
+  'Send to...' menu.
+* Improved info box for GEODESK.mod.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jun 19 17:40:38 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Fixed debug screen in GeoDesk options after
+  temporary loading modules.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jun 19 13:32:04 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* EXPERIMENTAL:
+  Added support for temporary loading modules
+  into the currently running GeoDesk session.
+  There is no need to reboot GeoDesk, the
+  modules will be available after you quit the
+  GEODESK.mod application.
+  After reboot thew modules will not be loaded
+  automatically.
+  This is different to install/remove modules
+  to the GeoDesk system file where you need to
+  restart GeoDesk to load the modules.
+* Added info box for GEODESK.mod.
+
+Bugs fixed:
+* Fixed english translations in GDC.GeoHelp.
+* Convert CR into LF when sending/converting
+  GeoWrite files.
+
+Known bugs:
+* Temporary loading modules will cause the debug
+  screen in GeoDesk options to display a wrong
+  end address for the last installed module.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Jun 18 19:17:00 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Changes:
+* Added support for converting GeoWrite documents
+  when using "Send to...".
+  Note: "Send to..." was created to work with the
+  VICE emulator and sending files to a VICE/host
+  file system. It has not been tested yet on real
+  devices or printers and does not support converting
+  files between different GEOS disk drives.
+* Added infobox/progress bar when sending files.
+* Updated GEODESK.mod file:
+  Added buttons to install or remove all modules.
+  Added extra button to switch status for the
+  selected module.
+* New version for GD.INI since some unused options
+  got removed. After upgrade you have to configure
+  GDOS64 again.
+
+Bugs fixed:
+* Reset current drive when save GeoDesk options.
+  This caused windows to display the wrong files
+  after options have been saved.
+
+Known bugs:
+* SendTo may add an extra CR between pages when
+  converting GeoWrite documents to ASCII.
+* Some missing translation in GDC.GeoHelp.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Thu Jun 16 08:08:10 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added minimal installation of GEOS/MegaPatch128
+  with two 1541 disk drives only.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Jun 12 18:48:04 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* EXPERIMENTAL!
+  Added 'Send to...' menu:
+  Send files to printer or devices connected
+  to the serial bus.
+  Currently only sequential files are supported,
+  GeoWrite documents will follow.
+* Allow manual activiation of the screen saver.
+
+Development:
+* Set correct version for GD.INI.
++--------------------+
+++
+GDOS64 updated.
+Updated Mon Jun  6 17:17:03 2022
+--
+Fixed disk name for GDOS64/EN snapshot disk.
++--------------------+
+++
+GDOS64 updated.
+Updated Mon Jun  6 16:20:07 2022
+--
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Whats new?
+* Added GeoDesk configuration for 'GD.INI' to
+  support a system wide configuration file.
+  GD.INI will not be replaced during an update,
+  except the version of the configuration file
+  has been updated.
+* Added HotCorners to the desktop. Note that
+  this still needs more testing.
+  Especially temporary hiding windows may cause
+  unexpected side effects.
+* Make some GeoDesk functions optional. Can be
+  installed using the GEODESK.mod file.
++--------------------+
+++
+GDOS64 updated.
+Updated Mon Jun  6 15:38:41 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Bugs fixed:
+* Skip testing HotCorners if mouse button is
+  pressed like when moving windows.
++--------------------+
+++
+GDOS64 updated.
+Updated Mon Jun  6 13:41:03 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Do not reset HotCorner action when enable
+  HotCorner option.
+* Enable HotCorner 1+2 by default, 3+4 will be
+  disabled but can be configured from the
+  options menu.
+* GeoDesk/Options: Enable 2-window-mode when
+  selecting source/target drive.
+* GeoDesk/Options: Replace 'next'-icon from the
+  HotCorner configuration menu with a 'switch'
+  icon to change values in both directions.
+
+Bugs fixed:
+* GeoDesk: When in paging mode a wrong number
+  for the first file on page 2 was displayed.
+* GeoDesk: Set correct view mode when creating an
+  applink for a disk/drive.
+* GeoDesk/Options: Do not enable text mode when
+  disable detailed text mode.
+
+Development:
+* Updated build system to allow building german
+  and english setup automatically without set
+  the requested language in the config file.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Jun  4 21:01:50 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added new HotCorner feature to the GeoDesk
+  desktop module:
+  Move mouse pointer into one of the four screen
+  corners, wait 1-3 seconds and a user defined
+  action will get started.
+  This could be launching GD.Config, temporary
+  hide open windows or start the screen saver.
+  Actions can be configured using the GeoDesk
+  options menu.
+
+Development:
+* Removed some deprecated code.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun May 29 14:10:54 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* The functions 'info pages' and 'sort directory'
+  have been moved to GEODESK.mod.
+  This makes GEODESK smaller and allows it to be
+  installed on customized 1541 disk drives.
+  Modules can be installed using GEODESK.mod.
++--------------------+
+++
+MegaAssembler updated.
+Updated Sun May 29 11:56:19 2022
+--
+Updated MegaAssembler source code V4.4.
+ => /usr/sources/megaassembler/v4.4
+ => /src/megaassembler
+
+Changes:
+* Fixed source code of CallMegaAss to allow
+  build with MegaAssembler V2.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sun May 29 08:23:38 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added some notes about GEOS128 and working
+  with multiple drives.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sun May 29 08:04:24 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added informations about working with multiple
+  disk drives without a ram expansion.
++--------------------+
+++
+MegaAssembler updated.
+Updated Sat May 28 16:06:25 2022
+--
+New MegaAssembler source code V4.4 released.
+ => /usr/sources/megaassembler/v4.4
+ => /src/megaassembler
+
+Changes:
+* Added option to check for valid operands
+  for pseudo opcodes. Example:
+  The GDOS64 code included some unused pseudo
+  opcodes that had invalid operands.
+  With V4.4 this will cause an error if this
+  option is enabled.
+  This option is disabled by default since it
+  needs more testing but is recommended to be
+  enabled for development projects.
+
+Bugs fixed:
+* Operands for pseudo opcodes not tested for
+  valid values (e.g. when used with a label and
+  the label was not defined).
+* When linking a non-GEOS file into a VLIR file,
+  the file size was wrong after linking.
+  This was because non-GEOS files do not have an
+  info block but the linker did not take care
+  about that.
+
+Development:
+* Need to rename symbol names in the assembler
+  (src.MegaAss4) or the code could not be
+  assembled using Version2 of MegaAssembler.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat May 28 15:26:33 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added module support.
+  Moved FileCVT and GeoPaint slide show to
+  the new GEODESK.mod file.
+  Both features are now disabled by default in
+  GeoDesk, but can easily be installed/removed
+  using GEODESK.mod.
+  This will make the core GEODESK small and
+  it will start faster for those who do not
+  need these features.
+  The help pages and the "Organize disk" menu
+  might be other candidates for modules.
+  New features might be added as optional
+  modules too.
+
+Bugs fixed:
+* Removed some obsolete opcodes and added some
+  more symbol tables for the GeoDesk sources.
+  MegaAssembler caused some issue with these
+  code issues, newer versions of MegaAssembler
+  will handle these issues in a better way.
+
+Development:
+* Merged duplicate code for display GeoPaint
+  images in GD.CONFIG, GeoDesk and the GeoPaint
+  slide show module.
++--------------------+
+++
+MegaPatch updated.
+Updated Tue May 24 19:02:43 2022
+--
+New SnapShot for MegaPatch 64/128 V3.3r10:
+ => /usr/snapshots/megapatch64_128/latest
+ => /usr/sources/megapatch64_128/latest
+ => /src/megapatch64_128/current
+
+Bugs fixed:
+* Creating a new document or open an existing
+  document using GeoWrite may cause a crash
+  when used with a CMD-RAMLink.
+  The bug requires a specific cursor position
+  in the current document (value in $94 >$80)
+  before closing the document and create a
+  new one from the GeoWrite create/open window.
+  This is the same issue as fixed in a previous
+  release when using the TaskManager to switch
+  between different GeoWrite documents.
+  This update includes fixed disk drivers that
+  will fix that issue.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun May 22 21:22:53 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Use <C=>+<DEL> to start screensaver.
+* Updated help pages.
+
+Bugs fixed:
+* Update temporary copy of GD.INI in
+  GEOS-DACC when switching modules.
+* First attempt to fix crash with GeoWrite
+  and RAMLink (without SuperCPU).
+  See TD_ExitTurbo/RAMLink for details.
+* Limit size of core module or system may
+  crash on disk-error caused by a sub-module.
+* Fixed a bug when checking for shortcuts.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 21 19:17:34 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Fixed some typos and comments.
+* Added original ODT file.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 21 14:24:28 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added additional installation steps for
+  InstalLDriveD to support a 4th drive when
+  using DualTop or TopDesk for GEOS 2.x.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 21 10:08:35 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Fixed some CONFIGURE descriptions.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 21 09:39:56 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added a list with different versions of
+  the CONFIGURE file for GEOS 2.x.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Wed May 18 06:14:08 2022
+--
+Added geos patchfiles:
+ => /usr/releases/geos-patchfiles
+
+Those patches will fix a minor issue for two
+desk accessories from the GEOS DeskPack collection:
+
+ => Calendar and Blackjack
+
+Both desk accessories need to be patched when
+using GeoDesk64 with coloured wallpapers only.
+TopDesk or MP128 users do not need these patches.
+
+Make sure to read the README before installation!
+You need the PATCH-SYSTEM to apply these patches.
+
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Changes:
+* Added new patches for Calendar and Blackjack.
+  Patches for Calendar also include the patches
+  to fix the Y2k-issues.
+* Added additional patches for geoWrite (gWp2.12),
+  geoPaint (gPp2.01) and geoPublish (gPup1.01).
+  Some of these patches might be obsolete, but not
+  for all systems. Apply these changes before any
+  other patches should work.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 14 18:23:19 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 14 18:14:41 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Fixed some patch file names.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 14 17:40:15 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Fixed index page and page numbers.
++--------------------+
+++
+GEOS installation HowTo updated.
+Updated Sat May 14 15:30:04 2022
+--
+Updated the GEOS installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+Added some examples about how to copy files to
+the C64 and how to convert CVT files.
+
+Added list of various patches for GEOS/MegaPatch
+and year2000 issues.
+
+Added examples for various GEOS applications and
+the required patches.
++--------------------+
+++
+Added GEOS installation HowTo.
+Updated Sun May  1 19:07:26 2022
+--
+Added GEOS-Installation HowTo:
+ => /doc/geos-install/GEOS-HowTo.pdf
+
+This is a first draft and not yet final.
+Don't blame me for typos, will be fixed.
+
+This HowTo describes the installation of:
+
+* GEOS 64/128 for C=REU and GeoRAM
+* GEOS 64 and CMD-SuperCPU
+* GEOS 64 and CMD-RAMLink
+* GEOS 64 and GateWay
+* GEOS/MegaPatch with GeoDesk64
+
+Note that installation of GEOS 64/128 are
+nearly identical, not all variants will be
+listed in the HowTo.
++--------------------+
+++
+MegaPatch updated.
+Updated Sat Apr 30 12:55:21 2022
+--
+New SnapShot for MegaPatch 64/128 V3.3r10:
+ => /usr/snapshots/megapatch64_128/latest
+ => /usr/sources/megapatch64_128/latest
+ => /src/megapatch64_128/current
+
+Bugs fixed:
+* DualTop128 expects the start address of pattern #0
+  at address $xxF0. The address was different since
+  the very first MegaPatch128 release.
+  Moved GEOS patterns in the GEOS128 kernal to match
+  address $xxF0 to fix this 20 year old bug.
+  This also affects DualTop64 in 40 columns mode but
+  does not affect DualTop64 used with MegaPatch64.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Apr 24 15:53:58 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Apr 23 20:39:13 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
++--------------------+
+++
+geoWiC64Koala uploaded.
+Updated Mon Apr 18 11:09:07 2022
+--
+New WiC64 demo application for GEOS: geoWiC64Koala
+Requires GEOS/MegaPatch64 or GDOS64 and WiC64.
+ => /usr/releases/geowic64koala
+ => /usr/sources/geowic64koala
+ => /src/geowic64koala
+
+The idea for this application is based on the
+WiC64 Koala demo which will load up to 500 koala
+images from WiC64.de in C64 BASIC mode.
+
+The program is based on the lib.WiC64 GEOS library
+and the slide show code was ported from the GDOS64
+geoPaint slide show module. See documentation here:
+ => /src/geowic64koala
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Apr 17 19:20:25 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* EXPERIMENTAL!
+  Added new slide show module to GeoDesk.
+  From the drive window popup menu select
+  "Drive -> Slide show" or from the desktop
+  popup menu select "Start slide show".
+  Use shortcuts A/B/C/D to switch between drives,
+  select 0-9 to change display speed.
+  Use F5 to switch info mode and press F7 to
+  pause the slide show. Press RETURN to exit.
+  Note: While loading the next geoPaint file
+  the keyboard is not checked for shortcuts.
+* Added color profile support when loading a
+  new background image using GeoDesk.
+  This is the same feature as in GD.CONFIG and
+  will load a matching color profile for the
+  selected background image.
+  The name of color profile must match the
+  name of the geoPaint image but the last four
+  characters must be ".col".
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Apr 16 20:39:03 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* EXPERIMENTAL!
+  Added GeoDesk configuration for 'GD.INI' to
+  support a system wide configuration.
+
+Development:
+* Removed unnecessary symbol labels.
+* Updated auto-assembler configuration files.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Apr 16 13:22:49 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* EXPERIMENTAL!
+  Updated 'GD.INI' support for a system wide
+  configuration file.
+* Added version check for GD.INI file, create a
+  new file if the existing file is outdated.
+* Removed default GD.INI file from SETUP.
+  If no GD.INI is found when booting into GDOS64
+  a new file will be created.
+* Removed deprecated code for GD.MAKEBOOT.
+* Launch GD.CONFIG after system boot bevor other
+  AUTOEXEC files will be loaded.
+* Move extra boot messages for loading disk driver
+  into system message file.
+
+Bugs fixed:
+* Disabling Spooler was not saved to configuration
+  file if it was active in the current system.
+* Set system font during boot up or autoexec files
+  might print text without a valid font set.
+* Only check for CBM key during boot for CMD-HD
+  disk drivers (start serial driver instead of PP).
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Apr 10 18:43:10 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* EXPERIMENTAL!
+  Initial support for system wide configuration
+  file named 'GD.INI'.
++--------------------+
+++
+WiC64-GEOS-Demo updated.
+Updated Fri Apr  1 19:29:07 2022
+--
+Updated the WiC64-GEOS-Demo:
+ => /usr/src/wic64-geos64-demo
+ => /usr/releases/wic64-geos64-demo/v0.2
+ => /usr/sources/wic64-geos64-demo/v0.2
+
+Changes:
+* Replaced build-in WiC64 routines with the code of
+  lib.WiC64 from the geoWLoad64/geoWiC64ntp project.
+  All three GEOS utilities share now the same
+  routines to access the WiC64.
+  Tested with C64/MK2, SuperCPU and TurboChameleon64.
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Apr  1 09:15:49 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64
+
+Added a new GDOS64 snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Changes:
+* Added new font for the register menu.
+  Note: The new register menu font will change
+  the width of some characters.
+  If the new font will break the UI of existing
+  applications then this change will be removed
+  or the font will be updated.
+
+Bugs fixed:
+* Fixed crash during installation of geoPublish.
+  Only affects 1541 disk driver.
++--------------------+
+++
+MegaPatch64/128 updated.
+Updated Thu Mar 31 15:55:32 2022
+--
+New SnapShot for MegaPatch 64/128 V3.3r10:
+ => /usr/snapshots/megapatch64_128/latest
+ => /usr/sources/megapatch64_128/latest
+ => /src/megapatch64_128/latest
+
+Changes:
+* Use "+" wallpaper for MegaPatch128 by default.
+
+Bugs fixed:
+* Fixed crash during installation of geoPublish.
+  Only affects 1541 disk driver.
++--------------------+
+++
+README updated.
+Updated Mon Mar 28 16:21:28 2022
+--
+Updated README file for geoWLoad64.
++--------------------+
+++
+README updated.
+Updated Mon Mar 28 16:19:16 2022
+--
+Updated README file for geoWLoad64.
++--------------------+
+++
+geoWLoad64 v0.1 released.
+Updated Mon Mar 28 16:14:19 2022
+--
+New geoWLoad V0.1 released.
+ => /usr/releases/geowload64
+
+Updated geoWLoad64 source code and documentation.
+ => /src/geowload64
+ => /usr/sources/geowload64
+
+Changes:
+* When downloading mutliple files to an SD2IEC
+  directory you will get asked if a swap list
+  should be created.
+  The swap list will automatically be enabled.
+  Note: If you download files from different
+  type then all files will be added to the new
+  swap list.
++--------------------+
+++
+geoWLoad64 updated.
+Updated Sun Mar 27 16:36:35 2022
+--
+Updated documentation for geoWLoad64:
+ => /src/geowload64
+
+Changes:
+* Added support for multiple downloads using links
+  from the link list.
+  This will download all files from the link list
+  to either a disk or an SD2IEC directory.
+  Existing files will not be replaced when using
+  auto download feature: If the file does already
+  exist a new name will be created.
+  If the last file is named "swaplist.lst" then
+  you will get asked if you want to enable it.
+  Enable swaplist will be skipped if downloaded
+  files had to be renamed to avoid replacing
+  existing files. In this case the swaplist would
+  not work.
+* Display current target filename during download.
+* Added disk info.
+  Click on "i" next to diskname to see the current
+  disk info like diskname and count of free blocks.
+* Removed temporary date/time feature since this
+  is now included in geoWiC64ntp.
++--------------------+
+++
+Added geoWiC64ntp.
+Updated Sat Mar 26 14:55:48 2022
+--
+New Project: geoWiC64ntp!
+ => /usr/releases/geowic64ntp
+ => /usr/sources/geowic64ntp
+ => /src/geowic64ntp
+
+geoWiC64ntp is a small utility for GEOS and MP3 that
+will allow users of a WiC64 module to set the current
+date and time using a NTP server.
++--------------------+
+++
+geoWLoad64 added.
+Updated Thu Mar 24 20:30:19 2022
+--
+Added documentation for geoWLoad64:
+ => /src/geowload64
+
+geoWLoad64 is a small utility for GEOS and MP3 that
+will allow users of a WiC64 module to download files
+using an internet connection.
++--------------------+
+++
+Uploaded WiC64-DEMO.
+Updated Sun Feb 13 15:20:44 2022
+--
+New Project: WiC64-GEOS64-DEMO!
+ => /usr/releases/wic64-geos64-demo
+ => /usr/sources/wic64-geos64-demo
+ => /src/wic64-geos64-demo
+
+The goal of this project is to get in touch with the
+programming of the WiC64. It should just demonstrate
+that access to the hardware is possible using GEOS.
+
+Although the program is called a "demo", it is
+fully functional.
+
+This program shows the current wifi the WiC64 is
+connected to and offers the possibility to start the
+WiC64 portal menu. Additionally the program allows
+to select the turbo mode for a SuperCPU or a
+TurboChameleon64 before opening the WiC64 portal menu.
++--------------------+
+++
+ChangeLog/comments updated.
+Updated Sun Feb  6 19:33:03 2022
+--
+Fixed some comments.
++--------------------+
+++
+GeoDesk64 updated.
+Updated Sun Feb  6 19:20:11 2022
+--
+Updated GeoDesk64 source code and documentation:
+ => /src/geodesk64/current
+ => /usr/sources/geodesk64/latest
+
+Added a new snapshot GeoDesk64 v1.064:
+ => /usr/snapshots/geodesk64/latest
+
+Bugs fixed:
+* Do not offer an "OK" button when enter a new
+  filename. Using "RETURN" to exit GetString will
+  add a NULL-byte when exit the dialogbox.
+  The "OK" button will not.
+  This also applies to the function "Copy files and
+  directories" and "Rename AppLink" when files do
+  already exist and you could enter a new file name.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Feb  6 18:04:19 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64
+
+Changes:
+* Added "Input filename" dialog when saving
+  a new color profile using GD.CONFIG.
+* Updated some english translations.
+* New default register menu for screen settings
+  is 'DESKTOP' when using GD.CONFIG.
+
+Bugs fixed:
+* Do not offer an "OK" button when enter a new
+  filename. Using "RETURN" to exit GetString will
+  add a NULL-byte when exit the dialogbox.
+  The "OK" button will not.
+  This also applies to the function "Copy files and
+  directories" when files do already exist and you
+  could enter a new file name.
++--------------------+
+++
+GDOS64 updated.
+Updated Sat Feb  5 19:39:16 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64
+
+Changes:
+* Added options to support loading color profiles
+  for a random loaded background image.
+  The name of the color profile must match the
+  name of the image for the first 12 characters
+  and requires the suffix ".col".
+  Example: GD64.LOGO -> GD64.LOGO.col
+  If no matching color profile is found the
+  system will either search for GeoDesk.col or
+  will always use the default system colors.
+* Updated some english setup and menu messages.
++--------------------+
+++
+GDOS64 updated.
+Updated Fri Feb  4 18:58:25 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64
+
+Added a new snapshot:
+ => /usr/snapshots/gdos64/latest
+
+Changes:
+* Do not display "Select partition" dialog when
+  install a new disk driver if there are no matching
+  partitions for the select drive mode. This only
+  applies to CMD drives (FD/HD/RL).
+* Added option to set a disk ID when format a disk.
+* Added compatibility warning option when format a
+  disk on a CMD-FD that does not match the current
+  drive mode (e.g. select HDN and drive is FD81).
+  If "Load drivers into RAM" is enabled, that warning
+  will be skipped and the drivers will be switched.
+  The default setting for this option can be saved
+  using the settings menu -> "Save options".
+* Updated messages for compatibility warning when
+  creating a new SD2IEC disk image (there is no
+  GEOS.Editor anymore...)
+
+Bugs fixed:
+* Clear ":drvUpdFlag" after driver has been switched
+  or additional windows may not be updated correct.
+* Reset flag to load files from top of the directory
+  after driver has been switched.
++--------------------+
+++
+GDOS64 updated.
+Updated Wed Feb  2 21:50:37 2022
+--
+Updated GDOS64 source code and documentation.
+ => /src/gdos64/current
+ => /usr/sources/gdos64
+
+Bugs fixed:
+* Revert a change that caused wrong default menu
+  settings for clear/purge disk menu.
+* Fix menu text in "Switch drive mode" menu.
++--------------------+
+++
+GDOS64 updated.
+Updated Wed Feb  2 21:15:46 2022
+--
+Updated GDOS64 source code and documentation.
+ => /src/gdos64/current
+ => /usr/sources/gdos64
+
+Bugs fixed:
+* Fixed a bug in the english GDOS build due to
+  a missing string end identifier.
++--------------------+
+++
+GDOS64 updated.
+Updated Wed Feb  2 19:58:58 2022
+--
+Updated GDOS64 source code and documentation.
+ => /src/gdos64/current
+ => /usr/sources/gdos64
++--------------------+
+++
+Added extra release files for geoConvert.
+Updated Tue Feb  1 06:41:27 2022
+--
+Added extra release files for geoConvert.
++--------------------+
+++
+Fixed README files.
+Updated Mon Jan 31 22:37:54 2022
+--
+Changed files:
+ README.md | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
++--------------------+
+++
+Fixed README files.
+Updated Mon Jan 31 22:28:20 2022
+--
+Changed files:
+ README.md | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
++--------------------+
+++
+Added /usr directory.
+Updated Mon Jan 31 22:08:34 2022
+--
+Added /usr directory which includes disk images
+with stable releases, development snapshots and
+source code used to build the programs.
++--------------------+
+++
+Added /doc directory.
+Updated Mon Jan 31 20:13:25 2022
+--
+Added /doc directory which includes some manuals,
+howtos and other documents.
++--------------------+
+++
+Initial upload.
+Updated Mon Jan 31 19:29:03 2022
+--
+Initial upload of /src directory which includes
+the source code documentation files.
++--------------------+
+++
