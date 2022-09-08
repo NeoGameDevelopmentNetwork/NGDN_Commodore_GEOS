@@ -13,14 +13,14 @@
 ;Assembler-Vorgang benötigen.
 ;
 ;Hinweis#2:
-;Ob ein Treiber TurboDOS oder FloppyDOS
+;Ob ein Treiber TurboDOS oder KernalDOS
 ;verwendet wird über die Include-Datei
-;"SetDOSMode" definiert.
+;"opt.Disk.Config" definiert.
 ;
-;TD-Includesn für TurboDOS werden
+;TD-Includes für TurboDOS werden
 ;mit "TDOS_ENABLED" eingebunden.
 ;
-;FD-Includes für FloppyDOS werden
+;FD-Includes für KernalDOS werden
 ;mit "TDOS_DISABLED" eingebunden.
 ;
 :D01			t "-D3_FindRAMLink"
@@ -34,11 +34,9 @@
 :D09			t "-D3_Dsk_DoRAMOp"
 :D10			t "-D3_Dsk_DoSekOp"
 :D11			t "-D3_1541_Cache"
-;			t "-D3_InitShadow"
 :D12			t "-D3_SdiskBlkBuf"
 :D13			t "-D3_ScurDirHead"
 :D14			t "-D3_S1stDirSek"
-:D15			t "-D3_SDirHead"
 :D16			t "-D3_InitForIO"
 :D17			t "-D3_DoneWithIO"
 :D18			t "-D3_PurgeTurbo"
@@ -70,7 +68,6 @@
 :D41			t "-D3_GetBorderB"
 :D42			t "-D3_GetPDEntry"
 :D43			t "-D3_GetPTypes"
-;D44			t "-D3_RdPartHead"
 :D45			t "-D3_BlkAlloc"
 :D46			t "-D3_AllocFreBlk"		;AllocFreBlk und SwapBlkMode wegen
 :D48			t "-D3_SwapBlkMode"		;BEQ/BNE-Befehlen nicht trennen!

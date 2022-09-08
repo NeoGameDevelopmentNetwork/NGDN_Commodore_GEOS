@@ -731,7 +731,7 @@ if LANG = LANG_DE
 :widthSub_Disk = $4f
 endif
 if LANG = LANG_EN
-:widthSub_Disk = $4f
+:widthSub_Disk = $47
 endif
 
 :menuSub_Disk		b $00,$00
@@ -827,7 +827,7 @@ if LANG = LANG_DE
 :widthSub_CBM = $4f
 endif
 if LANG = LANG_EN
-:widthSub_CBM = $4f
+:widthSub_CBM = $47
 endif
 
 :menuSub_CBM		b $00,$00

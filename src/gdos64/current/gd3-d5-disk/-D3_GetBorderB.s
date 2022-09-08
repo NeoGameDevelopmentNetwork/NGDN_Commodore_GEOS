@@ -49,16 +49,13 @@ if :tmp1 = TRUE
 ;    Rückgabe:		r1	= Track/Sektor für Borderblock.
 ;    Geändert:		AKKU,xReg,yReg,r1,r4,r5
 :xGetBorderBlock	jsr	ChkRootGEOS		;Auf GEOS-Diskette testen.
-;			tax				;":isGEOS" = $00 ?
-			beq	:exit			; => Ja, Keine GEOS-Diskette.
 
-::exit			jsr	xGetDirHead		;Aktuelle BAM einlesen.
-
+			jsr	xGetDirHead		;Aktuelle BAM einlesen.
 			cpx	#NO_ERROR		;Diskettenfehler?
 			bne	:err			; => Ja, Abbruch...
 
-			tax				;Borderblock vorhanden?
-			beq	:EOD			; => Nein, keine GEOS-Diskette.
+			bit	isGEOS			;Borderblock vorhanden?
+			bpl	:EOD			; => Nein, keine GEOS-Diskette.
 
 			sta	r1L			;Zeiger auf Borderblock
 			sty	r1H			;nach ":r1" übernehmen.

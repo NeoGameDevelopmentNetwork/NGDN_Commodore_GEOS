@@ -17,7 +17,7 @@ if :tmp0 = TRUE
 ;    Rückgabe:		r3	= Gesamtanzahl verfügbare Blöcke.
 ;			r4	= Anzahl freie Blöcke.
 ;    Geändert:		AKKU,xReg,yReg,r3,r4
-:CalcCurBlksFree	jsr	Set_curDirHead		;Zeiger auf aktuelle BAM setzen.
+:CalcCurBlksFree	jsr	curDirHead_r5		;Zeiger auf aktuelle BAM setzen.
 :xCalcBlksFree		PushW	r2			;Register ":r2" retten.
 
 			lda	#Tr_1stDataSek		;Zeiger auf ersten Datensektor.
@@ -103,7 +103,7 @@ if :tmp1 = TRUE
 ;    Rückgabe:		r3	= Gesamtanzahl verfügbare Blöcke.
 ;			r4	= Anzahl freie Blöcke.
 ;    Geändert:		AKKU,xReg,yReg,r3,r4
-:CalcCurBlksFree	jsr	Set_curDirHead		;Zeiger auf aktuelle BAM setzen.
+:CalcCurBlksFree	jsr	curDirHead_r5		;Zeiger auf aktuelle BAM setzen.
 :xCalcBlksFree		lda	#$00			;Zähler für freie Sektoren löschen.
 			sta	r4L
 			sta	r4H
@@ -136,7 +136,7 @@ if :tmp2 = TRUE
 ;    Rückgabe:		r3	= Gesamtanzahl verfügbare Blöcke.
 ;			r4	= Anzahl freie Blöcke.
 ;    Geändert:		AKKU,xReg,yReg,r3,r4
-:CalcCurBlksFree	jsr	Set_curDirHead		;Zeiger auf aktuelle BAM setzen.
+:CalcCurBlksFree	jsr	curDirHead_r5		;Zeiger auf aktuelle BAM setzen.
 :xCalcBlksFree		lda	#$00			;Zähler für freie Sektoren löschen.
 			sta	r4L
 			sta	r4H
@@ -183,7 +183,7 @@ if :tmp3 = TRUE
 ;    Rückgabe:		r3	= Gesamtanzahl verfügbare Blöcke.
 ;			r4	= Anzahl freie Blöcke.
 ;    Geändert:		AKKU,xReg,yReg,r3,r4
-:CalcCurBlksFree	jsr	Set_curDirHead		;Zeiger auf aktuelle BAM setzen.
+:CalcCurBlksFree	jsr	curDirHead_r5		;Zeiger auf aktuelle BAM setzen.
 :xCalcBlksFree		lda	#$00			;Zähler für freie Sektoren löschen.
 			sta	r4L
 			sta	r4H
@@ -235,7 +235,7 @@ if :tmp4 = TRUE
 ;    Rückgabe:		r3	= Gesamtanzahl verfügbare Blöcke.
 ;			r4	= Anzahl freie Blöcke.
 ;    Geändert:		AKKU,xReg,yReg,r3,r4
-:CalcCurBlksFree	jsr	Set_curDirHead		;Zeiger auf aktuelle BAM setzen.
+:CalcCurBlksFree	jsr	curDirHead_r5		;Zeiger auf aktuelle BAM setzen.
 :xCalcBlksFree		lda	#$00			;Zähler für freie Sektoren löschen.
 			sta	r4L
 			sta	r4H

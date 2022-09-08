@@ -148,8 +148,8 @@ if :tmp14 = TRUE
 endif
 
 ;*** Kennbyte für Laufwerkstreiber.
-:xDiskDrvType		b DiskDrvMode
-:xDiskDrvVersion	b DriverVersion
+:xDiskDrvType		b DISKDRV_MODE
+:xDiskDrvVersion	b DISKDRV_VERSION		;Interne Versionsnummer.
 
 ;******************************************************************************
 ::tmp21a = C_41!C_71!C_81

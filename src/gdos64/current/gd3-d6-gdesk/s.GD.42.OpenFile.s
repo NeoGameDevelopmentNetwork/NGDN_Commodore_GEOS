@@ -467,7 +467,7 @@ endif
 
 ;*** Systemdatei öffnen.
 ;An dieser Stelle werden nur die
-;geoDesk-Farbdateien geladen.
+;geoDesk-Farb-/Icondateien geladen.
 :OpenSystem		;LoadW	r6,fileName		;Zeiger auf Dateiname bereits in r6.
 			jsr	FindFileHeader		;Datei suchen und Header einlesen.
 			txa				;Fehler?
@@ -478,17 +478,28 @@ endif
 			ldx	#r0L
 			ldy	#r1L
 			jsr	CmpString		;GeoDesk-Farbdatei?
+			beq	:color			; => Nein, Ende...
+
+			LoadW	r0,fileHeader +77
+			LoadW	r1,:icnConfigClass
+			ldx	#r0L
+			ldy	#r1L
+			jsr	CmpString		;GeoDesk-Farbdatei?
 			bne	:exit			; => Nein, Ende...
 
-			jsr	loadColConfig		;Farbdaten einlesen.
-
+::icons			jsr	loadIconConfig		;Icondaten einlesen.
 			jmp	MOD_REBOOT		;Desktop neu zeichnen.
+
+::color			jsr	loadColConfig		;Farbdaten einlesen.
+			jmp	MOD_REBOOT		;Desktop neu zeichnen.
+
 ::exit			jmp	MOD_RESTART		;Ohne Update zurück zum DeskTop...
 ::error			jmp	OpenFNamError		; => Abbruch.
 
 ::colConfigClass	b "geoDeskCol  V1.0",NULL
+::icnConfigClass	b "geoDeskIcon V0.1",NULL
 
-;*** Konfiguration laden.
+;*** Farb-Konfiguration laden.
 :loadColConfig		LoadW	r6,fileName		;Zeiger auf Dateiname.
 			jsr	FindFile		;Datei auf Disk suchen.
 			txa				;Gefunden?
@@ -502,6 +513,34 @@ endif
 			bne	:exit			; => Ja, Abbruch...
 
 			jsr	SUB_SAVECOL		;Farbprofil in DACC speichern.
+
+			ldx	#NO_ERROR		;Kein Fehler.
+::exit			rts
+
+;*** Icon-Konfiguration laden.
+:loadIconConfig		LoadW	r6,fileName		;Zeiger auf Dateiname.
+			jsr	FindFile		;Datei auf Disk suchen.
+			txa				;Gefunden?
+			bne	:exit			; => Nein, Abbruch...
+
+			LoadB	r0L,%00000001
+			LoadW	r6,fileName		;Zeiger auf Dateiname.
+			LoadW	r7,tempIconData		;Startadresse Icondaten.
+			jsr	GetFile			;Datei einlesen.
+			txa				;Fehler?
+			bne	:exit			; => Ja, Abbruch...
+
+			jsr	i_MoveData		;Systemicons.
+			w	tempIconData
+			w	Icon_Drive
+			w	9*64
+
+			jsr	i_MoveData		;Arbeitsplatz.
+			w	tempIconData +9*64
+			w	appLinkIBufA
+			w	64
+
+			jsr	BACKUP_GDCORE		;Icondaten in DACC speichern.
 
 			ldx	#NO_ERROR		;Kein Fehler.
 ::exit			rts
@@ -1239,3 +1278,4 @@ endif
 ;******************************************************************************
 			g BASE_DIRDATA
 ;******************************************************************************
+:tempIconData		;Ladeadresse für Icon-Datei.

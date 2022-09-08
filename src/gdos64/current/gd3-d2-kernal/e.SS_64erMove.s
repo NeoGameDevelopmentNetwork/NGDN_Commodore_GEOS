@@ -15,6 +15,9 @@ if .p
 			t "SymbTab_GERR"
 			t "SymbTab_MMAP"
 			t "MacTab"
+
+;--- Externe Labels:
+			t "o.SS_64erMov.ext"
 endif
 
 ;*** GEOS-Header.
@@ -72,20 +75,27 @@ endif
 			dex
 			bpl	:51
 
+			lda	RAM_BANK		;Freie Speicherbank einlesen.
+			ldx	#%11000000		;Bank-Typ: System.
+			jsr	DACC_ALLOC_BANK		;Speicher reservieren.
+
 			jsr	SaveRamData
 
 			jsr	i_MoveData
 			w	ScrSaverCode
-			w	$0a00
+			w	BASE_SV64MOVE
 			w	EndSaverCode - ScrSaverCode
 
 			lda	RAM_BANK
-			jsr	$0a00			;Bildschirmschoner aktivieren.
+			jsr	BASE_SV64MOVE		;Bildschirmschoner aktivieren.
 
 			jsr	LoadRamData
 
 			lda	#%01000000		;Bildschirmschoner neu starten.
 			sta	Flag_ScrSaver
+
+			lda	RAM_BANK		;Reservierte Speicherbank.
+			jsr	DACC_FREE_BANK		;Speicher wieder freigeben.
 
 			ldx	#$00			;Register ":r0" bis ":r3"
 ::52			pla				;zurückschreiben.
@@ -207,6 +217,8 @@ endif
 
 ;*** Speicherverwaltung.
 			t "-DA_FindBank"
+			t "-DA_FreeBank"
+			t "-DA_AllocBank"
 			t "-DA_GetBankByte"
 
 ;*** Variablen für 64K-Speicher.

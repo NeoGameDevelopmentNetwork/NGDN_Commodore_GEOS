@@ -18,7 +18,6 @@ if .p
 			t "SymbTab_GERR"
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
-			t "SymbTab_MMAP"
 			t "SymbTab_DISK"
 			t "SymbTab_DCMD"
 			t "SymbTab_DBOX"
@@ -365,5 +364,5 @@ if LANG = LANG_EN
 endif
 
 ;******************************************************************************
-			g LOAD_REGISTER
+			g RegMenuBase
 ;******************************************************************************

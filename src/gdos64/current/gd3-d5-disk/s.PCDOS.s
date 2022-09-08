@@ -8,8 +8,6 @@
 
 ;*** Symboltabellen.
 if .p
-			t "opt.Disk.Version"
-			t "opt.Disk.DOSMode"
 			t "SymbTab_CSYS"
 			t "SymbTab_CROM"
 			t "SymbTab_GDOS"
@@ -20,6 +18,10 @@ if .p
 			t "SymbTab_DDRV"
 			t "SymbTab_GRFX"
 			t "MacTab"
+
+;--- Laufwerkstreiber konfigurieren.
+			t "opt.Disk.Config"
+			t "opt.Disk.DOSMode"
 endif
 
 ;*** GEOS-Header.
@@ -59,23 +61,22 @@ if .p
 :IEC_NM			= FALSE
 :S2I_NM			= FALSE
 
-.DriveModeFlags		= SET_MODE_SUBDIR
+:DISKDRV_MODE		= DrvPCDOS
+:DISKDRV_OPTS		= SET_MODE_SUBDIR
 
-.PART_TYPE		= DrvPCDOS
+:PART_TYPE		= DrvPCDOS
 ;:PART_MAX		= 0
 
-.DiskDrvMode		= DrvPCDOS
-.Tr_BorderBlock		= 79
-.Se_BorderBlock		= 01
-.Tr_1stDirSek		= 01
-.Se_1stDirSek		= 01
+.Tr_1stDirSek		= 1
+.Se_1stDirSek		= 1
 .Tr_1stDataSek		= 32
-.Se_1stDataSek		= 00
-.Tr_DskNameSek		= 00
-.Se_DskNameSek		= 01
-.Tr_BootSektor		= 00
-.Se_BootSektor		= 01
-.MaxDirPages		= 255
+.Se_1stDataSek		= 0
+;:Tr_BorderBlock	= 79
+;:Se_BorderBlock	= 1
+;:Tr_BootSektor		= 0
+;:Se_BootSektor		= 1
+
+:MaxDirPages		= 255				;max. 255*8 = 2040 Dateien.
 
 ;*** TurboDOS-Modus für aktuellen Treiber setzen.
 :TDOS_MODE = TDOS_PC_DOS
@@ -101,16 +102,9 @@ endif
 ;*** Erweiterte Sprungtabelle/Speicheradressen.
 			t "-DX_JumpTabDDX"
 
-;******************************************************************************
-:S_DRIVER_DATA
-;******************************************************************************
-
 ;*** Variablen für Laufwerkstreiber.
-:drvData		t "-DX_DriverData"
-
-;******************************************************************************
+:S_DRIVER_DATA		t "-DX_DriverData"
 :E_DRIVER_DATA
-;******************************************************************************
 
 ;*** Ungültiger Befehl, Abbruch.
 :xIllegalCommand	ldx	#WR_PR_ON

@@ -18,7 +18,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_DBOX"
 			t "SymbTab_CHAR"
 			t "MacTab"
@@ -28,6 +27,7 @@ if .p
 
 ;--- Externe Labels.
 			t "s.GD.10.Core.ext"
+			t "e.Register.ext"
 
 ;--- Variablen für Status-Box:
 :STATUS_X		= $0040
@@ -1303,5 +1303,5 @@ endif
 ;Sicherstellen das genügend Speicher
 ;für Dateinamen und Kopierspeicher
 ;verfügbar ist.
-			g LOAD_REGISTER -(MAX_DIR_ENTRIES * 17)
+			g RegMenuBase -(MAX_DIR_ENTRIES * 17)
 ;******************************************************************************

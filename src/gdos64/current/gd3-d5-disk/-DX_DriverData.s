@@ -7,10 +7,25 @@
 ;
 
 ;******************************************************************************
-::tmp0a = FD_NM!HD_NM!HD_NM_PP!IEC_NM!S2I_NM
-::tmp0b = RL_NM!RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
-::tmp0 = :tmp0a!:tmp0b
+::tmp0a = C_41!C_71!C_81!RD_41!RD_71!RD_81
+::tmp0b = RL_41!RL_71!RL_81!FD_41!FD_71!FD_81
+::tmp0c = HD_41!HD_71!HD_81!HD_41_PP!HD_71_PP!HD_81_PP
+::tmp0d = RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
+::tmp0e = FD_NM!HD_NM!HD_NM_PP!RL_NM!IEC_NM!S2I_NM
+::tmp0  = :tmp0a!:tmp0b!:tmp0c!:tmp0d!:tmp0e
 if :tmp0 = TRUE
+;******************************************************************************
+:Flag_BorderBlock	b $00				;$FF = Borderblock aktiv.
+
+;*** Format-Info für GEOS-Diskette.
+:GEOS_FormatInfo	b "GEOS format V1.0"
+endif
+
+;******************************************************************************
+::tmp1a = FD_NM!HD_NM!HD_NM_PP!IEC_NM!S2I_NM
+::tmp1b = RL_NM!RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
+::tmp1 = :tmp1a!:tmp1b
+if :tmp1 = TRUE
 ;******************************************************************************
 ;*** Systemvariablen.
 :DiskSize_Lb		b $00				;(Angabe in Kb!)
@@ -30,8 +45,17 @@ if :tmp0 = TRUE
 endif
 
 ;******************************************************************************
-::tmp1 = RL_41!RL_71!RL_81!RL_NM
-if :tmp1 = TRUE
+::tmp2 = RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
+if :tmp2!TEST_RAMNM_SHARED = TRUE!SHAREDDIR_ENABLED
+;******************************************************************************
+;*** Adresse "SharedDir"-Verzeichnis.
+:SharedD_Tr		b $00				;Zeiger auf Shared/Dir.
+:SharedD_Se		b $00
+endif
+
+;******************************************************************************
+::tmp3 = RL_41!RL_71!RL_81!RL_NM
+if :tmp3 = TRUE
 ;******************************************************************************
 ;*** Eintrag für aktuelle Partition.
 ;    Werden auch in der REU abgespeichert!
@@ -45,8 +69,8 @@ if :tmp1 = TRUE
 endif
 
 ;******************************************************************************
-::tmp2 = PC_DOS
-if :tmp2 = TRUE
+::tmp4 = PC_DOS
+if :tmp4 = TRUE
 ;******************************************************************************
 ;*** Cluster/Sektor-Umrechnung.
 .Seite			b $00

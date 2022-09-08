@@ -13,59 +13,59 @@
 if :tmp0 = TRUE
 ;******************************************************************************
 ;*** GEOS-Diskette erstellen.
-;    Übergabe:		-
-;    Rückgabe:		-
-;    Geändert:		AKKU,xReg,yReg,r1,r3,r4,r5
+;Übergabe: -
+;Rückgabe: X = $00: Kein Fehler.
+;Geändert: A,X,Y,r1,r3,r4,r5
 :xSetGEOSDisk		lda	#1			;Hauptverzeichnis öffnen.
 			sta	DirHead_Tr
 			sta	DirHead_Se
 
 			jsr	xGetDirHead		;Aktuelle BAM/ROOT-Dir einlesen.
 			txa				;Diskettenfehler ?
-			bne	:exitSetGDisk		; => Ja, Abbruch...
+			bne	:exit			; => Ja, Abbruch...
 
 ;			ldx	#NO_ERROR		;XReg ist bereits $00.
 			jsr	ChkDkGEOS_r5		;Auf GEOS-Diskette testen.
 ;			tay				;":isGEOS" = $FF?
-			bne	:exitSetGDisk		; => Ja, ist bereits GEOS-Diskette!
+			bne	:exit			; => Ja, ist bereits GEOS-Diskette!
 
 			jsr	CalcCurBlksFree		;Anzahl freier Blocks berechnen.
 
 			ldx	#INSUFF_SPACE
 			lda	r4L
 			ora	r4H			;Sektor auf Diskette frei ?
-			beq	:exitSetGDisk		; => Nein, Abbruch...
+			beq	:exit			; => Nein, Abbruch...
 
-			lda	#Tr_1stDataSek		;Zeiger auf ersten Datenblock für
+			lda	#Tr_BorderBlock		;Zeiger auf ersten Datenblock für
 			sta	r3L			;Suche nach freiem Sektor setzen.
-			lda	#Se_1stDataSek
+			lda	#Se_BorderBlock
 			sta	r3H
 			jsr	xSetNextFree		;Freien Sektor auf Diskette suchen.
 			txa				;Diskettenfehler ?
-			bne	:exitSetGDisk		; => Ja, Abbruch...
+			bne	:exit			; => Ja, Abbruch...
 
 ;			MoveB	r3L,r1L			;Wird durch ":clrDiskBlk_r3"
 ;			MoveB	r3H,r1H			;kopiert.
 			jsr	clrDiskBlk_r3		;Inhalt des BorderBlocks löschen.
 			txa				;Diskettenfehler ?
-			bne	:exitSetGDisk		; => Ja, Abbruch...
+			bne	:exit			; => Ja, Abbruch...
 
-			lda	r1L			;Zeiger auf BorderBlock in
-			ldy	r1H			;BAM zwischenspeichern.
-			sta	curDirHead +171
-			sty	curDirHead +172
+			lda	r1L			;Zeiger auf Borderblock in
+			sta	curDirHead +171		;BAM zwischenspeichern.
+			lda	r1H
+			sta	curDirHead +172
 
 			ldx	#16 -1
-::1			lda	FormatText     ,x	;GEOS-Formatkennung setzen.
+::1			lda	GEOS_FormatInfo,x	;GEOS-Formatkennung setzen.
 			sta	curDirHead +173,x
 			dex
 			bpl	:1
 
 			jsr	xPutDirHead		;BAM auf Diskette speichern.
 ;			txa				;Diskettenfehler ?
-;			bne	:exitSetGDisk		; => Ja, Abbruch...
+;			bne	:exit			; => Ja, Abbruch...
 
-::exitSetGDisk		rts
+::exit			rts
 endif
 
 ;******************************************************************************
@@ -76,52 +76,52 @@ endif
 if :tmp1 = TRUE
 ;******************************************************************************
 ;*** GEOS-Diskette erstellen.
-;    Übergabe:		-
-;    Rückgabe:		-
-;    Geändert:		AKKU,xReg,yReg,r1,r3,r4
+;Übergabe: -
+;Rückgabe: X = $00: Kein Fehler.
+;Geändert: A,X,Y,r1,r3,r4,r5
 :xSetGEOSDisk		jsr	xGetDirHead		;Aktuelle BAM einlesen.
 			txa				;Diskettenfehler ?
-			bne	:exitSetGDisk		; => Ja, Abbruch...
+			bne	:exit			; => Ja, Abbruch...
 
 ;			ldx	#NO_ERROR		;XReg ist bereits $00.
 			jsr	ChkDkGEOS_r5		;Auf GEOS-Diskette testen.
 ;			tay				;":isGEOS" = $FF?
-			bne	:exitSetGDisk		; => Ja, ist bereits GEOS-Diskette!
+			bne	:exit			; => Ja, ist bereits GEOS-Diskette!
 
 			jsr	CalcCurBlksFree		;Anzahl freier Blocks berechnen.
 
 			jsr	IsDirSekFree		;Freien Verzeichnis-Sektor suchen.
 			txa				;Ist Sektor frei ?
-			bne	:exitSetGDisk		; => Abbruch wenn kein Sektor frei.
+			bne	:exit			; => Abbruch wenn kein Sektor frei.
 
-			lda	#Tr_BorderBlock		;Zeiger auf BorderBlock.
+			lda	#Tr_BorderBlock		;Zeiger auf Borderblock.
 			sta	r3L
 			lda	#Se_BorderBlock
 			sta	r3H
-			jsr	SetNextFree		;BorderBlock belegen.
+			jsr	xSetNextFree		;Borderblock belegen.
 			txa				;Diskettenfehler ?
-			bne	:exitSetGDisk		; => Ja, Abbruch...
+			bne	:exit			; => Ja, Abbruch...
 
 ;			MoveB	r3L,r1L			;Wird durch ":clrDiskBlk_r3"
 ;			MoveB	r3H,r1H			;kopiert.
 			jsr	clrDiskBlk_r3		;Inhalt des BorderBlocks löschen.
 			txa				;Diskettenfehler ?
-			bne	:exitSetGDisk		; => Ja, Abbruch...
+			bne	:exit			; => Ja, Abbruch...
 
-			lda	r1L			;Zeiger auf BorderBlock in
+			lda	r1L			;Zeiger auf Borderblock in
 			sta	curDirHead +171		;BAM zwischenspeichern.
 			lda	r1H
 			sta	curDirHead +172
 
 			ldx	#16 -1
-::1			lda	FormatText     ,x	;GEOS-Formatkennung setzen.
+::1			lda	GEOS_FormatInfo,x	;GEOS-Formatkennung setzen.
 			sta	curDirHead +173,x
 			dex
 			bpl	:1
 
 			jsr	xPutDirHead		;BAM auf Diskette speichern.
 ;			txa				;Diskettenfehler ?
-;			bne	:exitSetGDisk		; => Ja, Abbruch...
+;			bne	:exit			; => Ja, Abbruch...
 
-::exitSetGDisk		rts
+::exit			rts
 endif

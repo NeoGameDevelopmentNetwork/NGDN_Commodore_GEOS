@@ -166,10 +166,10 @@
 			jsr	DoDlgBox
 ::exitDlg		rts
 
-;opt.GDOSl10n.ext
+;opt.GDOSl10n
 ::00			b "opt.GDOSl10n.ext",$00
 
-;s.GD3_KERNAL.ext
+;s.GD3_KERNAL
 ::01			b "s.GD3_KERNAL.ext",$00
 
 ;e.Register
@@ -196,14 +196,18 @@
 ::21			b "s.GD.BOOT.2.ext",$00
 ::22			b "s.GD.BOOT.ext",$00
 
-;s.GD.RBOOT.S.ext
+;s.GD.RBOOT.S
 ::31			b "s.GD.RBOOT.S.ext",$00
+
+;s.64erMove
+::70			b "o.SS_64erMov.ext",$00
 
 ::90			w :00,:01,:10
 			w :11,:11a,:11b,:11c,:11d,:11e,:11f,:11g
 			w :12,:13,:15
 			w :21,:22
 			w :31
+			w :70
 
 			w $0000
 

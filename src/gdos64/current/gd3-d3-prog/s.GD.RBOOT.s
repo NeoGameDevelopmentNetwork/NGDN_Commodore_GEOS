@@ -11,7 +11,6 @@ if .p
 			t "opt.GDOSl10n.ext"
 			t "SymbTab_CSYS"
 			t "SymbTab_CROM"
-;			t "SymbTab_GDOS"
 			t "SymbTab_1"
 			t "SymbTab_GTYP"
 			t "SymbTab_MMAP"

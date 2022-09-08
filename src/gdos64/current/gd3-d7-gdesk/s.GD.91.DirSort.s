@@ -21,7 +21,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_DBOX"
 			t "SymbTab_CHAR"
 			t "MacTab"
@@ -83,7 +82,7 @@ if SORTMODE64K = FALSE
 ;Max. 208 Dateien mit Datei-Info.
 :MaxReadSek		= 28 - ((SORTFINFO_SIZE + 255) / 256)
 :MaxSortFiles		= MaxReadSek  *8
-:DIRSEK_SOURCE		= LOAD_REGISTER - (MaxReadSek * 256)
+:DIRSEK_SOURCE		= RegMenuBase - (MaxReadSek * 256)
 :FSLCT_TARGET		= DIRSEK_SOURCE - 256
 :FLIST_TARGET		= FSLCT_TARGET  - 256
 :FSLCT_SOURCE		= FLIST_TARGET  - 256
@@ -109,7 +108,7 @@ if SORTMODE64K = TRUE
 :MaxReadSek		= 226 - ((SORTFINFO_SIZE + 255) / 256) *8
 :MaxSortFiles		= MaxReadSek  *8
 :DIRSEK_SOURCE		= diskBlkBuf
-:FLIST_TARGET		= LOAD_REGISTER - MaxSortFiles*2
+:FLIST_TARGET		= RegMenuBase - MaxSortFiles*2
 :FLIST_SOURCE		= FLIST_TARGET     - MaxSortFiles*2
 endif
 

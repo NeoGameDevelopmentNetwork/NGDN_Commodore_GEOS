@@ -135,10 +135,10 @@ endif
 if :tmp3 = TRUE
 ;******************************************************************************
 ;*** Diskette aktivieren.
-:xGetDiskSize		lda	#$01			;Vorgabewert falls BAM
-			sta	LastTrOnDsk		;ungültig ist.
+:xGetDiskSize		ldx	#$01			;Vorgabewert falls BAM
+			stx	LastTrOnDsk		;ungültig ist.
 
-			ldx	#$01			;BAM-Sektor $01/$02 einlesen.
+;			ldx	#$01			;BAM-Sektor $01/$02 einlesen.
 			stx	r1L			;Dieser Sektor beinhaltet in
 			inx				;Byte #8 die max. Track-Anzahl.
 			stx	r1H
@@ -176,10 +176,10 @@ endif
 if :tmp4 = TRUE
 ;******************************************************************************
 ;*** Diskette aktivieren.
-:xGetDiskSize		lda	#$01			;Vorgabewert falls BAM
-			sta	LastTrOnDsk		;ungültig ist.
+:xGetDiskSize		ldx	#$01			;Vorgabewert falls BAM
+			stx	LastTrOnDsk		;ungültig ist.
 
-			ldx	#$01			;BAM-Sektor $01/$02 einlesen.
+;			ldx	#$01			;BAM-Sektor $01/$02 einlesen.
 			stx	r1L			;Dieser Sektor beinhaltet in
 			inx				;Byte #8 die max. Track-Anzahl.
 			stx	r1H

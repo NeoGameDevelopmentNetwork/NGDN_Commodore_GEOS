@@ -147,15 +147,16 @@ if .p
 endif
 
 ;*** Einsprungtabelle für ":DoRegister".
-.DoRegister		jmp	xDoRegister
-.ExitRegisterMenu	jmp	xExitRegister
-.RegisterInitMenu	jmp	xRegisterInitMenu
-.RegisterUpdate		jmp	xRegisterUpdate
-.RegisterAllOpt		jmp	xRegisterAllOpt		;Register aktualisieren.
-.RegisterNextOpt	jmp	xRegisterNextOpt	;Register aktualisieren.
-.RegDrawOptFrame	jmp	xRegDrawOptFrame
-.RegClrOptFrame		jmp	xRegClrOptFrame
-.RegisterSetFont	jmp	UseFontG3
+.RegMenuBase						;Ladeadresse Registermenü.
+.DoRegister		jmp	xDoRegister		;Registermenü starten.
+.ExitRegisterMenu	jmp	xExitRegister		;Registermenü beenden.
+.RegisterInitMenu	jmp	xRegisterInitMenu	;Registermenü initialisieren.
+.RegisterUpdate		jmp	xRegisterUpdate		;Registerkarte aktualisieren.
+.RegisterAllOpt		jmp	xRegisterAllOpt		;Alle Optionen aktualisieren.
+.RegisterNextOpt	jmp	xRegisterNextOpt	;Nächste Option aktualisieren.
+.RegDrawOptFrame	jmp	xRegDrawOptFrame	;Optionsrahmen zeichnen.
+.RegClrOptFrame		jmp	xRegClrOptFrame		;Optionsrahmen löschen.
+.RegisterSetFont	jmp	UseFontG3		;Font Registermenü aktivieren.
 
 ;*** Variablen.
 .RegisterAktiv		b $00

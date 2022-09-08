@@ -7,8 +7,8 @@
 ;
 
 ;******************************************************************************
-::tmp0 = RL_NM!RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
-if :tmp0 = TRUE
+::tmp0a = RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
+if :tmp0a!TEST_RAMNM_SHARED = TRUE!SHAREDDIR_DISABLED
 ;******************************************************************************
 ;*** BAM auf Diskette schreiben.
 ;    Übergabe:		-
@@ -18,6 +18,45 @@ if :tmp0 = TRUE
 			jsr	xWriteBlock		;Verzeichnis-Header schreiben.
 			txa				;Diskettenfehler?
 			bne	:51			; => Ja, Abbruch...
+
+			jsr	xPutBAMBlock		;Aktuelle BAM auf Disk schreiben.
+;			txa				;Diskettenfehler?
+;			bne	:51			; => Ja, Abbruch...
+
+::51			rts
+endif
+
+;******************************************************************************
+::tmp0b = RD_NM!RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
+if :tmp0b!TEST_RAMNM_SHARED = TRUE!SHAREDDIR_ENABLED
+;******************************************************************************
+;*** BAM auf Diskette schreiben.
+;    Übergabe:		-
+;    Rückgabe:		-
+;    Geändert:		AKKU,xReg,yReg,r1,r4
+:xPutDirHead		bit	isGEOS			;GEOS-Diskette?
+			bpl	:50			; => Nein, weiter...
+
+			lda	BorderB_Tr		;Borderblock definiert?
+			beq	:50			; => Nein, weiter...
+			sta	curDirHead +171
+			lda	BorderB_Se		;Shared/Dir durch Adresse des
+			sta	curDirHead +172		;Borderblock zurücksetzen.
+
+::50			jsr	Set_DirHead		;Zeiger auf BAM setzen.
+			jsr	xWriteBlock		;Verzeichnis-Header schreiben.
+			txa				;Diskettenfehler?
+			bne	:51			; => Ja, Abbruch...
+
+;--- Hinweis:
+;Durch das zurücksetzen des Borderblock
+;und löschen der Shared/Dir-Adresse
+;wird bei VALIDATE verhindert, das die
+;Dateien aus dem Shared/Dir doppelt in
+;der BAM reserviert werden.
+;			ldx	#NULL
+			stx	SharedD_Tr		;Shared/Dir-Zeiger löschen.
+			stx	SharedD_Se
 
 			jsr	xPutBAMBlock		;Aktuelle BAM auf Disk schreiben.
 ;			txa				;Diskettenfehler?
@@ -131,7 +170,7 @@ if :tmp5 = TRUE
 endif
 
 ;******************************************************************************
-::tmp8 = FD_NM!HD_NM!HD_NM_PP!IEC_NM!S2I_NM
+::tmp8 = RL_NM!FD_NM!HD_NM!HD_NM_PP!IEC_NM!S2I_NM
 if :tmp8 = TRUE
 ;******************************************************************************
 ;*** BAM auf Diskette schreiben.

@@ -14,33 +14,30 @@
 if :tmp0 = TRUE
 ;******************************************************************************
 ;*** Zeiger auf ersten Verzeichnis-Eintrag setzen.
-;    Übergabe:		-
-;    Rückgabe:		r5	= Zeiger auf ersten Verzeichnis-Eintrag.
-;    Geändert:		AKKU,xReg,yReg,r1,r4
-:xGet1stDirEntry	php				;IRQ-Status zwischenspeichern und
-			sei				;IRQs sperren.
-
-			jsr	Set_1stDirSek		;Zeiger auf ersten Verzeichnis-
+;Übergabe: -
+;Rückgabe: r5 = Zeiger auf ersten Verzeichnis-Eintrag.
+;          X  = $00: Kein Fehler.
+;Geändert: A,X,Y,r1,r4
+:xGet1stDirEntry	jsr	Set_1stDirSek		;Zeiger auf ersten Verzeichnis-
 							;Sektor setzen.
 			lda	#$00
 			sta	Flag_BorderBlock
-			beq	GetCurDirSek		;Sektor einlesen.
+			beq	GetCurDirSek		;Verzeichnis-Sektor einlesen.
 
 ;*** Nächsten Verzeichnis-Eintrag einlesen.
-;    Übergabe:		r5	= Zeiger auf aktuellen Eintrag.
-;    Rückgabe:		r5	= Zeiger auf nächsten Verzeichnis-Eintrag.
-;    Geändert:		AKKU,xReg,yReg,r1,r4
-:xGetNxtDirEntry	php				;IRQ-Status zwischenspeichern und
-			sei				;IRQs sperren.
-
-			ldy	#$00			;YReg = #NULL = Verzeichnis OK
+;Übergabe: r5 = Zeiger auf aktuellen Eintrag.
+;Rückgabe: r5 = Zeiger auf nächsten Verzeichnis-Eintrag.
+;          X  = $00: Kein Fehler.
+;          Y  = $FF: Verzeicnis-Ende erreicht.
+;Geändert: A,X,Y,r1,r4
+:xGetNxtDirEntry	ldy	#$00			;YReg = #NULL = Verzeichnis OK
 			ldx	#NO_ERROR		;XReg = #NULL = NO_ERROR.
 
-			lda	#$20
-			clc				;r5 auf nächsten Eintrag setzen.
-			adc	r5L
-			sta	r5L
-			bcc	EndDirSekJob
+			lda	r5L			;r5 auf nächsten Eintrag setzen.
+			clc
+			adc	#$20
+			sta	r5L			;Ende Verzeichnis-Block?
+			bcc	EndDirSekJob		; => Nein, weiter...
 
 ;			ldx	#NO_ERROR
 ;			ldy	#$00
@@ -51,47 +48,44 @@ if :tmp0 = TRUE
 ;			cmp	#> diskBlkBuf		;Ende des Sektors erreicht ?
 ;			beq	EndDirSekJob		;Nein, weiter...
 
-			dey				;YReg = #255 = Verzeichnis Ende.
-			lda	diskBlkBuf +$01
+			dey				;YReg = #$FF = Verzeichnis Ende.
+
+			lda	diskBlkBuf +1
 			sta	r1H
-			lda	diskBlkBuf +$00
+			lda	diskBlkBuf +0
 			sta	r1L			;Weiterer Sektor verfügbar ?
 			bne	GetCurDirSek		;Ja, Sektor einlesen.
 
-			lda	Flag_BorderBlock	;Ist BorderBlock bereits aktiv ?
-			bne	EndDirSekJob		;Ja, Verzeichnis-Ende erreicht.
-			dec	Flag_BorderBlock	;BorderBlock aktivieren.
+			bit	Flag_BorderBlock	;Ist Borderblock bereits aktiv ?
+			bmi	EndDirSekJob		; => Ja, Verzeichnis-Ende erreicht.
 
-			jsr	xGetBorderBlock		;Zeiger auf BorderBlock einlesen.
+			dec	Flag_BorderBlock	;Borderblock aktivieren.
+
+			jsr	xGetBorderBlock		;Zeiger auf Borderblock einlesen.
 			txa				;Diskettenfehler ?
-			bne	EndDirSekJob		;Ja, Abbruch...
-			tya				;BorderBlock verfügbar ?
-			bne	EndDirSekJob		;Nein, Abbruch...
+			bne	EndDirSekJob		; => Ja, Abbruch...
+			tya				;Borderblock verfügbar ?
+			bne	EndDirSekJob		; => Nein, Abbruch...
 
 :GetCurDirSek		jsr	xGetBlock_dskBuf	;Verzeichnis-Sektor einlesen.
 
 			ldy	#$00
 			LoadW	r5,diskBlkBuf +2
-:EndDirSekJob		plp				;IRQ-Status zurücksetzen.
-			rts
-
-:Flag_BorderBlock	b $00
+:EndDirSekJob		rts
 endif
 
 ;******************************************************************************
-::tmp1a = FD_NM!PC_DOS!HD_NM!HD_NM_PP!RL_NM!RD_NM!IEC_NM!S2I_NM
+::tmp1a = FD_NM!HD_NM!HD_NM_PP!RL_NM!RD_NM!IEC_NM!S2I_NM
 ::tmp1b = RD_NM_SCPU!RD_NM_CREU!RD_NM_GRAM
 ::tmp1  = :tmp1a!:tmp1b
 if :tmp1 = TRUE
 ;******************************************************************************
 ;*** Zeiger auf ersten Verzeichnis-Eintrag setzen.
-;    Übergabe:		-
-;    Rückgabe:		r5	= Zeiger auf ersten Verzeichnis-Eintrag.
-;    Geändert:		AKKU,xReg,yReg,r1,r4
-:xGet1stDirEntry	php				;IRQ-Status zwischenspeichern und
-			sei				;IRQs sperren.
-
-			jsr	xGetDirHead		;Aktuelle BAM einlesen.
+;Übergabe: -
+;Rückgabe: r5 = Zeiger auf ersten Verzeichnis-Eintrag.
+;          X  = $00: Kein Fehler.
+;Geändert: A,X,Y,r1,r4
+:xGet1stDirEntry	jsr	xGetDirHead		;Aktuelle BAM einlesen.
 			txa				;Diskettenfehler ?
 			bne	EndDirSekJob		; => Ja, Abbruch...
 
@@ -99,23 +93,104 @@ if :tmp1 = TRUE
 							;Sektor setzen.
 			lda	#$00
 			sta	Flag_BorderBlock
-			beq	GetCurDirSek		;Sektor einlesen.
+			beq	GetCurDirSek		;Verzeichnis-Sektor einlesen.
 
 ;*** Nächsten Verzeichnis-Eintrag einlesen.
-;    Übergabe:		r5	= Zeiger auf aktuellen Eintrag.
-;    Rückgabe:		r5	= Zeiger auf nächsten Verzeichnis-Eintrag.
-;    Geändert:		AKKU,xReg,yReg,r1,r4
-:xGetNxtDirEntry	php				;IRQ-Status zwischenspeichern und
-			sei				;IRQs sperren.
-
-			ldy	#$00			;YReg = #NULL = Verzeichnis OK
+;Übergabe: r5 = Zeiger auf aktuellen Eintrag.
+;Rückgabe: r5 = Zeiger auf nächsten Verzeichnis-Eintrag.
+;          X  = $00: Kein Fehler.
+;          Y  = $FF: Verzeicnis-Ende erreicht.
+;Geändert: A,X,Y,r1,r4
+:xGetNxtDirEntry	ldy	#$00			;YReg = #NULL = Verzeichnis OK
 			ldx	#NO_ERROR		;XReg = #NULL = NO_ERROR.
 
-			lda	#$20
-			clc				;r5 auf nächsten Eintrag setzen.
-			adc	r5L
-			sta	r5L
-			bcc	EndDirSekJob
+			lda	r5L			;r5 auf nächsten Eintrag setzen.
+			clc
+			adc	#$20
+			sta	r5L			;Ende Verzeichnis-Block?
+			bcc	EndDirSekJob		; => Nein, weiter...
+
+;			ldx	#NO_ERROR
+;			ldy	#$00
+
+;			AddVBW	32,r5			;Zeiger auf nächsten Eintrag setzen.
+
+;			lda	r5H
+;			cmp	#> diskBlkBuf		;Ende des Sektors erreicht ?
+;			beq	EndDirSekJob		; => Nein, weiter...
+
+			dey				;YReg = #$FF = Verzeichnis Ende.
+
+			lda	diskBlkBuf +1
+			sta	r1H
+			lda	diskBlkBuf +0
+			sta	r1L			;Weiterer Sektor verfügbar ?
+			bne	GetCurDirSek		; => Ja, Sektor einlesen.
+
+			bit	Flag_BorderBlock	;Borderblock/SharedDir aktiv?
+			bmi	EndDirSekJob		; => Ja, Verzeichnis-Ende erreicht.
+
+			dec	Flag_BorderBlock	;Borderblock/SharedDir aktiv.
+
+;--- Hinweis:
+;":OpenDisk" führt ":GetDirHead" aus.
+;Bei NativeMode wird dabei der ROOT-
+;BAM-Block mit der Adresse des Border-
+;Blocks eingelesen.
+;			jsr	xGetBorderBlock		;Zeiger auf Borderblock einlesen.
+;			txa				;Diskettenfehler ?
+;			bne	EndDirSekJob		; => Ja, Abbruch...
+;			tya				;Borderblock verfügbar ?
+;			bne	EndDirSekJob		; => Nein, Abbruch...
+
+			bit	isGEOS			;GEOS-Diskette?
+			bpl	EndDirSekJob		; => Nein, Ende...
+
+			lda	curDirHead +172
+			sta	r1H
+			lda	curDirHead +171
+			sta	r1L			;Borderblock/SharedDir vorhanden?
+			beq	EndDirSekJob		; => Nein, Ende...
+
+:GetCurDirSek		jsr	xGetBlock_dskBuf	;Verzeichnis-Sektor einlesen.
+
+			ldy	#$00
+			LoadW	r5,diskBlkBuf +2
+:EndDirSekJob		rts
+endif
+
+;******************************************************************************
+::tmp2 = PC_DOS
+if :tmp2 = TRUE
+;******************************************************************************
+;*** Zeiger auf ersten Verzeichnis-Eintrag setzen.
+;Übergabe: -
+;Rückgabe: r5 = Zeiger auf ersten Verzeichnis-Eintrag.
+;          X  = $00: Kein Fehler.
+;Geändert: A,X,Y,r1,r4
+:xGet1stDirEntry	jsr	xGetDirHead		;Aktuelle BAM einlesen.
+			txa				;Diskettenfehler ?
+			bne	EndDirSekJob		; => Ja, Abbruch...
+
+			jsr	Set_1stDirSek		;Zeiger auf ersten Verzeichnis-
+							;Sektor setzen.
+			clv
+			bvc	GetCurDirSek		;Verzeichnis-Sektor einlesen.
+
+;*** Nächsten Verzeichnis-Eintrag einlesen.
+;Übergabe: r5 = Zeiger auf aktuellen Eintrag.
+;Rückgabe: r5 = Zeiger auf nächsten Verzeichnis-Eintrag.
+;          X  = $00: Kein Fehler.
+;          Y  = $FF: Verzeicnis-Ende erreicht.
+;Geändert: A,X,Y,r1,r4
+:xGetNxtDirEntry	ldy	#$00			;YReg = #NULL = Verzeichnis OK
+			ldx	#NO_ERROR		;XReg = #NULL = NO_ERROR.
+
+			lda	r5L			;r5 auf nächsten Eintrag setzen.
+			clc
+			adc	#$20
+			sta	r5L			;Ende Verzeichnis-Block?
+			bcc	EndDirSekJob		; => Nein, weiter...
 
 ;			ldx	#NO_ERROR
 ;			ldy	#$00
@@ -126,29 +201,17 @@ if :tmp1 = TRUE
 ;			cmp	#> diskBlkBuf		;Ende des Sektors erreicht ?
 ;			beq	EndDirSekJob		;Nein, weiter...
 
-			dey				;YReg = #255 = Verzeichnis Ende.
+			dey				;YReg = #$FF = Verzeichnis Ende.
+
 			lda	diskBlkBuf +$01
 			sta	r1H
 			lda	diskBlkBuf +$00
 			sta	r1L			;Weiterer Sektor verfügbar ?
-			bne	GetCurDirSek		;Ja, Sektor einlesen.
-
-			lda	Flag_BorderBlock	;Ist BorderBlock bereits aktiv ?
-			bne	EndDirSekJob		;Ja, Verzeichnis-Ende erreicht.
-			dec	Flag_BorderBlock	;BorderBlock aktivieren.
-
-			jsr	xGetBorderBlock		;Zeiger auf BorderBlock einlesen.
-			txa				;Diskettenfehler ?
-			bne	EndDirSekJob		;Ja, Abbruch...
-			tya				;BorderBlock verfügbar ?
-			bne	EndDirSekJob		;Nein, Abbruch...
+			beq	EndDirSekJob		; => Ja, Verzeichnis-Ende erreicht.
 
 :GetCurDirSek		jsr	xGetBlock_dskBuf	;Verzeichnis-Sektor einlesen.
 
 			ldy	#$00
 			LoadW	r5,diskBlkBuf +2
-:EndDirSekJob		plp				;IRQ-Status zurücksetzen.
-			rts
-
-:Flag_BorderBlock	b $00
+:EndDirSekJob		rts
 endif

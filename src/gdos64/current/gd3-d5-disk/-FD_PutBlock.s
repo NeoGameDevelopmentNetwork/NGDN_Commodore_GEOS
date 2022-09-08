@@ -14,7 +14,7 @@ if :tmp0!TDOS_MODE = TRUE!TDOS_DISABLED
 ;    Übergabe:		-
 ;    Rückgabe:		-
 ;    Geändert:		AKKU,xReg,yReg,r4
-:xPutBlock_dskBuf	jsr	Set_diskBlkBuf
+:xPutBlock_dskBuf	jsr	diskBlkBuf_r4
 
 ;*** Sektor von Diskette einlesen.
 ;    Übergabe:		-
@@ -88,7 +88,7 @@ if :tmp1!TDOS_MODE = TRUE!TDOS_DISABLED
 ;    Übergabe:		-
 ;    Rückgabe:		-
 ;    Geändert:		AKKU,xReg,yReg,r4
-:xPutBlock_dskBuf	jsr	Set_diskBlkBuf
+:xPutBlock_dskBuf	jsr	diskBlkBuf_r4
 
 ;*** Sektor von Diskette einlesen.
 ;    Übergabe:		-

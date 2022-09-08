@@ -28,7 +28,7 @@
 ;
 ;Um die neuen KernalMode-Treibern zu
 ;assemblieren muss die Datei
-;`src.Disk.DOSMode` mit einem Editor
+;`opt.Disk.DOSMode` mit einem Editor
 ;(geoWrite) angepasst werden.
 ;
 ;Die KernalMode-Treiber sind sehr

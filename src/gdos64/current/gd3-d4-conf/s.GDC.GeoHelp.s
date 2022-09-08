@@ -14,7 +14,6 @@ if .p
 			t "SymbTab_1"
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
-			t "SymbTab_MMAP"
 			t "SymbTab_DCMD"
 			t "SymbTab_DBOX"
 			t "SymbTab_CHAR"
@@ -483,5 +482,5 @@ endif
 ;******************************************************************************
 ;*** Endadresse testen.
 ;******************************************************************************
-			g LOAD_REGISTER
+			g RegMenuBase
 ;******************************************************************************

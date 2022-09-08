@@ -17,7 +17,6 @@ if .p
 			t "SymbTab_GERR"
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
-			t "SymbTab_MMAP"
 			t "SymbTab_CHAR"
 			t "SymbTab_SCPU"
 			t "SymbTab_DBOX"
@@ -684,12 +683,12 @@ endif
 			jmp	CopyFileDT
 
 ;*** Systeminformationen einlesen.
-:GetSysInfo		jsr	SetADDR_EnterDT
-			jsr	FetchRAM
+:GetSysInfo		jsr	SetADDR_EnterDT		;ext. EnterDT-Routine nach
+			jsr	FetchRAM		;":LOAD_ENTER_DT" = $7E00 einlesen.
 
-			LoadW	r0,LOAD_ENTER_DT
+;			LoadW	r0,LOAD_ENTER_DT	;Startadresse EnterDT-Routine.
 			LoadW	r1,$00c4		;Länge EnterDT-Routine.
-			jsr	CRC
+			jsr	CRC			;Prüfsumme berechnen.
 
 ;--- Hinweis:
 ;GD.CONFIG erstellt eine Prüfsumme um
@@ -1632,5 +1631,5 @@ endif
 ;******************************************************************************
 ;*** Endadresse testen.
 ;******************************************************************************
-			g LOAD_REGISTER
+			g RegMenuBase
 ;******************************************************************************

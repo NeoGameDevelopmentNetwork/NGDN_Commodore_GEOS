@@ -24,7 +24,7 @@ if :tmp0!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	xFlag_SD2IEC
 			sta	RealDrvMode -8,y
 
@@ -102,7 +102,7 @@ if :tmp1!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	xFlag_SD2IEC
 			sta	RealDrvMode -8,y
 
@@ -177,7 +177,7 @@ if :tmp2!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	xFlag_SD2IEC
 			sta	RealDrvMode -8,y
 
@@ -255,7 +255,7 @@ if :tmp2a!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	xFlag_SD2IEC
 			sta	RealDrvMode -8,y
 
@@ -333,7 +333,7 @@ if :tmp3!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			sta	RealDrvMode -8,y
 
 			lda	turboFlags  -8,y	;TurboRoutinen in FloppyRAM ?
@@ -410,7 +410,7 @@ if :tmp4!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			sta	RealDrvMode -8,y
 
 			lda	turboFlags  -8,y
@@ -484,7 +484,7 @@ if :tmp5!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			sta	RealDrvMode -8,y
 
 			jsr	initRAMLink		;RAMLink-Daten initialisieren.
@@ -640,7 +640,7 @@ if :tmp6!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			sta	RealDrvMode -8,y
 
 			lda	#%11000000		;Flag für "TurboDOS in FloppyRAM"
@@ -669,7 +669,7 @@ if :tmp7!TDOS_MODE = TRUE!TDOS_ENABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	GeoRAMBSize
 			sta	RealDrvMode -8,y
 

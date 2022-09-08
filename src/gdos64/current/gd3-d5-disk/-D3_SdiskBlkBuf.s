@@ -16,6 +16,10 @@
 if :tmp0 = TRUE
 ;******************************************************************************
 ;*** Zeiger auf ":diskBlkBuf" setzen.
-:Set_diskBlkBuf		LoadW	r4,diskBlkBuf
+:diskBlkBuf_r4		lda	#< diskBlkBuf
+			sta	r4L
+			lda	#> diskBlkBuf
+			sta	r4H
+
 			rts
 endif

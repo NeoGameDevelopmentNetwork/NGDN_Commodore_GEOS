@@ -7,11 +7,11 @@
 ;
 
 ;*** Tabellenwert für Speicherbank finden.
-;    Übergabe: YReg = 64K-Speicherbank-Nr.
-;    Rückgabe: AKKU = %00xxxxxx = Frei.
-;                     %01xxxxxx = Anwendung.
-;                     %10xxxxxx = Laufwerk.
-;                     %11xxxxxx = System.
+;Übergabe: Y = 64K-Speicherbank-Nr.
+;Rückgabe: A = %00xxxxxx = Frei.
+;              %01xxxxxx = Anwendung.
+;              %10xxxxxx = Laufwerk.
+;              %11xxxxxx = System.
 :DACC_BANK_BYTE		tya
 			lsr
 			lsr

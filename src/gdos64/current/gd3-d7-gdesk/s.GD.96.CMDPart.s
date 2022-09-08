@@ -20,7 +20,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_DISK"
 			t "SymbTab_DCMD"
 			t "SymbTab_DBOX"
@@ -886,5 +885,5 @@ endif
 :sysMemS		= (sysMemE - sysMemA)
 
 ;******************************************************************************
-			g LOAD_REGISTER - sysMemS
+			g RegMenuBase - sysMemS
 ;******************************************************************************

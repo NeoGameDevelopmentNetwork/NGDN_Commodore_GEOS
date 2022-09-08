@@ -27,7 +27,7 @@ if :tmp0!TDOS_MODE = TRUE!TDOS_DISABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	xFlag_SD2IEC
 			sta	RealDrvMode -8,y
 
@@ -67,7 +67,7 @@ if :tmp1!TDOS_MODE = TRUE!TDOS_DISABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			ora	xFlag_SD2IEC
 			sta	RealDrvMode -8,y
 
@@ -107,7 +107,7 @@ if :tmp2!TDOS_MODE = TRUE!TDOS_DISABLED
 
 			lda	diskDrvType
 			sta	RealDrvType -8,y
-			lda	#DriveModeFlags
+			lda	#DISKDRV_OPTS
 			sta	RealDrvMode -8,y
 
 ;			ldy	curDrive

@@ -395,7 +395,7 @@ if LANG = LANG_DE
 ;--- 05: FILE_NOT_FOUND
 :m05a			b PLAINTEXT
 			b "Die Datei wurde im Verzeichnis /",NULL
-:m05b			b "auf Dskette nicht gefunden!",NULL
+:m05b			b "auf Diskette nicht gefunden!",NULL
 
 ;--- 06: BAD_BAM
 :m06a			b PLAINTEXT

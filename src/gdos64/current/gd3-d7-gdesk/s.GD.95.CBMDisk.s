@@ -27,7 +27,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_CHAR"
 			t "MacTab"
 
@@ -1339,5 +1338,5 @@ endif
 :BUF_END		= BASE_DIRDATA
 
 ;******************************************************************************
-			g LOAD_REGISTER
+			g RegMenuBase
 ;******************************************************************************

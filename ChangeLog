@@ -1,3 +1,63 @@
+GDOS64 updated.
+Updated Tue Sep  6 19:06:40 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Added initial support for customizing GeoDesk
+  system icons (workplace, native-mode sub-directories,
+  drive/printer/input/partition icons).
+  Currently loading such a icon config file has been
+  added, a simple icon manager is needed to replace
+  the icons and set color for some of the icons.
++--------------------+
+++
+GDOS64 updated.
+Updated Sun Sep  4 22:30:05 2022
+--
+Updated GDOS64 source code and documentation:
+ => /src/gdos64/current
+ => /usr/sources/gdos64/latest
+
+Changes:
+* Merged 'Proof-of-Concept' code for Shared/Dir
+  support and NativeMode RAMDisk drivers.
+  This is a "compile-time" feature and is disabled
+  by default for GDOS64.
+  If enabled "Disk properties" can be used to set
+  a system-wide directory as a "shared directory" for
+  RAMNative (STD/CREU/SCPU/GRAM) disk drivers only:
+  The content of the selected directory will be
+  listed in addition to files included in other
+  sub-directories.
+  Open the sub-directory that should be used as a
+  "Shared directory", select "Disk properties" and
+  set option "V2" ("V1" must also be enabled).
+
+Bugs fixed:
+* x81 drivers used up to 37 directory pages. This
+  was not compatible to GEOS since block #39 was
+  reserved for the GEOS border block.
+  Limit directory pages to 36 Pages = 288 files.
+* Fixed ":GetBorderBlock" routine for native-mode
+  disk drivers.
+
+Development:
+* Updated symbol tables to free up some symbol
+  memory for MegaAssembler.
+* Reserve free 64K bank in 64erMove screen saver.
+  No other application might allocate RAM while
+  the screen saver is active, but to be correct
+  the RAM should be blocked.
+* Set default border block for native-mode disk
+  drivers to first data block.
+* Removed GEOS format support from the PCDOS
+  disk driver. This will never work.
+* Removed deprectaed code and labels.
++--------------------+
+++
 GeoDesk64/MegaPatch updated.
 Updated Sun Aug 21 13:58:42 2022
 --

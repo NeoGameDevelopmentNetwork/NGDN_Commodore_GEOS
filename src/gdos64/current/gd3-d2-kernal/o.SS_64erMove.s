@@ -17,17 +17,17 @@ if .p
 			t "SymbTab_GSPR"
 			t "SymbTab_SCPU"
 			t "MacTab"
+
+.BASE_SV64MOVE		= $0a00
+:BASE_SV64DATA		= $0d00
+:BASE_ZPAGEBUF		= $0900
 endif
 
 ;*** GEOS-Header.
 			n "obj.SS_64erMove"
 			f DATA
 
-			o $0a00
-
-if .p
-:ZeroPBuf		= $0900
-endif
+			o BASE_SV64MOVE
 
 ;*** Bildschirmschoner initialisieren.
 :DoSaverJob		sta	RAM_BANK +1
@@ -168,7 +168,7 @@ endif
 
 			ldx	#$00			;ZeroPage zwischenspeichern.
 ::51			lda	zpage   ,x
-			sta	ZeroPBuf,x
+			sta	BASE_ZPAGEBUF,x
 			inx
 			bne	:51
 
@@ -183,7 +183,7 @@ endif
 
 ;*** I/O-Daten zurückschreiben.
 :LoadIOdata		ldx	#$02			;ZeroPage zurücksetzen.
-::51			lda	ZeroPBuf,x
+::51			lda	BASE_ZPAGEBUF,x
 			sta	zpage   ,x
 			inx
 			bne	:51
@@ -408,7 +408,7 @@ endif
 ;******************************************************************************
 ; Achtung! Folgende Tabellen sind ab $0D00 verankert...
 ;******************************************************************************
-			e $0d00
+			e BASE_SV64DATA
 ;******************************************************************************
 :pdat1			b $0a,$25,$95,$96,$99,$99
 			b $99,$9a,$02,$09,$25,$25

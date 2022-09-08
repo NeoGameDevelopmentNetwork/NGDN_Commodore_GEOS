@@ -8,8 +8,6 @@
 
 ;*** Symboltabellen.
 if .p
-			t "opt.Disk.Version"
-			t "opt.Disk.DOSMode"
 			t "SymbTab_CSYS"
 			t "SymbTab_CROM"
 			t "SymbTab_GDOS"
@@ -21,6 +19,10 @@ if .p
 			t "SymbTab_GRFX"
 			t "SymbTab_RLNK"
 			t "MacTab"
+
+;--- Laufwerkstreiber konfigurieren.
+			t "opt.Disk.Config"
+			t "opt.Disk.DOSMode"
 endif
 
 ;*** GEOS-Header.
@@ -60,21 +62,23 @@ if .p
 :IEC_NM			= FALSE
 :S2I_NM			= FALSE
 
-:DriveModeFlags		= SET_MODE_PARTITION ! SET_MODE_FASTDISK
+:DISKDRV_MODE		= DrvHD81
+:DISKDRV_OPTS		= SET_MODE_PARTITION ! SET_MODE_FASTDISK
 
 :PART_TYPE		= Drv1581
 :PART_MAX		= 254
 
-:DiskDrvMode		= DrvHD81
-:Tr_BorderBlock		= 40
-:Se_BorderBlock		= 39
 :Tr_1stDirSek		= 40
 :Se_1stDirSek		= 3
 :Tr_1stDataSek		= 1
 :Se_1stDataSek		= 0
+:Tr_BorderBlock		= 40
+:Se_BorderBlock		= 39
+
+:MaxDirPages		= 36				;max. 36*8 = 288 Dateien.
+
 :Tr_DskNameSek		= 40
 :Se_DskNameSek		= 0
-:MaxDirPages		= 37
 
 ;*** TurboDOS-Modus für aktuellen Treiber setzen.
 :TDOS_MODE = TDOS_HD_81_PP
@@ -85,6 +89,10 @@ endif
 
 ;*** Erweiterte Sprungtabelle/Speicheradressen.
 			t "-DX_JumpTabDDX"
+
+;*** Variablen für Laufwerkstreiber.
+:S_DRIVER_DATA		t "-DX_DriverData"
+:E_DRIVER_DATA
 
 ;*** Include-Dateien.
 			t "-DX_IncludeFile"

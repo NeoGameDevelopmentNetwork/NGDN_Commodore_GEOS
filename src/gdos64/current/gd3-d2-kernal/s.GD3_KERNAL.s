@@ -447,19 +447,22 @@ endif
 :drivePartData		s $04
 
 ;*** Echte Laufwerksbezeichnungen.
-:RealDrvType		s $04				; C=1541,71,81 = $01,$02,$03
-							; C=1541,81 Shadowed = $41,$43
-							; C=RAM1541,71,81 = $81,$82,$83
-							; CMD FD,HD,RL = $1x,$2x,$3x
-:RealDrvMode		s $04				; $80 = Laufwerk unterstützt CMD-partitionen.
-							; $40 = Laufwerk unterstützt CMD-Verzeichnisse.
-							; $20 = Physikalisches Laufwerk mit 20Mhz.
+:RealDrvType		s $04				;C=1541,71,81 = $01,$02,$03
+							;C=1541,81 Shadowed = $41,$43
+							;C=RAM1541,71,81 = $81,$82,$83
+							;CMD FD,HD,RL = $1x,$2x,$3x
+:RealDrvMode		s $04				;$80 = Laufwerk unterstützt CMD-partitionen.
+							;$40 = Laufwerk unterstützt CMD-Verzeichnisse.
+							;$20 = Physikalisches Laufwerk mit 20Mhz.
 
 ;*** Speicherbelegung.
 :RamBankInUse		s RAM_MAX_SIZE / 8 *2
-							; 128 Bit, je 2 Bit für eine 64K-Bank = 4MByte.
-							; Bits #7,6 = Bank #0, Bits #5,4 = Bank #1, usw...
-							; %00 = Frei, %01 = Appl., %10 = Disk, %11 = GEOS.
+							;128 Bit, je 2 Bit für eine 64K-Bank = 4MByte.
+							;Bits #7,6 = Bank #0, Bits #5,4 = Bank #1, usw...
+							;Banktyp: %00 = Frei.
+							;         %01 = Anwendung.
+							;         %10 = Laufwerk.
+							;         %11 = System.
 :RamBankFirst		w $0000				;Lage des GEOS-DACC in REU/RL/RCARD.
 :GEOS_RAM_TYP		b $00				;Typ Speichererweiterung
 							;(Bit 7 = RL; Bit 6 = REU, Bit 5 = BBG; Bit 4 = SCPU)

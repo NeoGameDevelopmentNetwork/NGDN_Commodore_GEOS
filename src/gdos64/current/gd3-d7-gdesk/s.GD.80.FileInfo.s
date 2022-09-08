@@ -27,7 +27,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_DISK"
 			t "SymbTab_DBOX"
 			t "SymbTab_CHAR"
@@ -1194,7 +1193,7 @@ endif
 			cmp	#255			;Speicher voll?
 			beq	:buffer_full		; => Ja, Ende...
 
-			CmpWI	r1,LOAD_REGISTER
+			CmpWI	r1,RegMenuBase
 			beq	:buffer_full		; => Ja, Ende...
 
 ::next_file		inc	r3L			;Dateizähler +1.

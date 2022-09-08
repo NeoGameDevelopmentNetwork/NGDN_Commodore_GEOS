@@ -144,7 +144,7 @@
 
 			jmp	Load_Reg_r0_r4
 
-;*** TurboDOS-Routine für !DOS.
+;*** TurboDOS-Routine für PC_DOS-Treiber.
 :TurboDOS_DOS		d "obj.TurboDOS"
 
 ;*** Externe Routinen laden.
@@ -238,7 +238,7 @@
 ;    Übergabe:		-
 ;    Rückgabe:		-
 ;    Geändert:		AKKU,xReg,yReg,r4
-:xGetBlock_dskBuf	jsr	Set_diskBlkBuf
+:xGetBlock_dskBuf	jsr	diskBlkBuf_r4
 
 ;*** Sektor von Diskette einlesen.
 ;    Übergabe:		-
@@ -523,7 +523,7 @@
 ;    Übergabe:		-
 ;    Rückgabe:		-
 ;    Geändert:		AKKU,xReg,yReg,r4
-:xPutBlock_dskBuf	jsr	Set_diskBlkBuf
+:xPutBlock_dskBuf	jsr	diskBlkBuf_r4
 
 ;*** Sektor von Diskette einlesen.
 ;    Übergabe:		-

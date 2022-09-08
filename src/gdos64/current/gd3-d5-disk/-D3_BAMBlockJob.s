@@ -44,6 +44,7 @@ if :tmp0 = TRUE
 			sei				;IRQs sperren.
 
 			ldx	#NO_ERROR		;Flag für "Kein Fehler".
+
 			bit	BAM_Modified		;BAM im Speicher geändert ?
 			bpl	EndBAMBlock		; => Nein, weiter...
 

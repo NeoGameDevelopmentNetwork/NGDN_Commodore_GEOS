@@ -20,7 +20,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_DISK"
 			t "SymbTab_DCMD"
 			t "SymbTab_DBOX"
@@ -1066,5 +1065,5 @@ endif
 ;Sicherstellen das genügend Speicher
 ;für Dateinamen und Kopierspeicher
 ;verfügbar ist.
-			g LOAD_REGISTER -(MAX_DIR_ENTRIES * 17)
+			g RegMenuBase -(MAX_DIR_ENTRIES * 17)
 ;******************************************************************************

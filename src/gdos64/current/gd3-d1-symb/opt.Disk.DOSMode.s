@@ -6,7 +6,7 @@
 ; creating an executable program.
 ;
 
-;*** DOS-Modus definieren:
+;*** Laufwerkstreiber: DOS-Modus.
 ;(Nur Werte von $x1xx-$xFxx möglich!)
 :TDOS_ENABLED		= $0100				;GEOS-TurboDOS verwenden.
 :TDOS_DISABLED		= $0200				;Standard-FloppyDOS verwenden.

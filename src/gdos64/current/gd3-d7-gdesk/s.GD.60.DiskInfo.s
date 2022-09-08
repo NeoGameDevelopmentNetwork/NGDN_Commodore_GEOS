@@ -19,7 +19,6 @@ if .p
 			t "SymbTab_GTYP"
 			t "SymbTab_DTYP"
 			t "SymbTab_APPS"
-			t "SymbTab_MMAP"
 			t "SymbTab_DISK"
 			t "SymbTab_DCMD"
 			t "SymbTab_DBOX"
@@ -32,6 +31,9 @@ if .p
 ;--- Externe Labels.
 			t "s.GD.10.Core.ext"
 			t "e.Register.ext"
+
+;--- Laufwerkstreiber.
+			t "opt.Disk.Config"
 endif
 
 ;*** GEOS-Header.
@@ -55,16 +57,36 @@ endif
 ;*** Disk-Info anzeigen.
 :xDISKINFO		jsr	doGetDiskInfo		;DiskInfo einlesen.
 			txa				;Fehler?
-			beq	:1			; => Nein, weiter...
+			bne	:err			; => Nein, weiter...
 
-			jsr	doXRegStatus		;Disk-/Laufwerksfehler ausgeben.
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			ldy	#13			;Nur GEOS-Disk V1.
 
-			jsr	PurgeTurbo		;TurboDOS entfernen.
+			lda	curType
+			cmp	#DrvRAMNM		;RAMNative-Laufwerk?
+			bne	:setMenu		; => Nein, weiter...
 
-			jmp	ExitRegMenuUser		;Zurück zum DeskTop.
+			ldx	curDrive		;CMD-Laufwerk?
+			lda	RealDrvMode -8,x
+			and	#SET_MODE_PARTITION
+			bne	:setMenu		; => Ja, weiter...
 
-::1			LoadW	r0,RegMenu1		;Zeiger auf Register-Menü.
+			ldy	#14			;GEOS-Disk V2 aktivieren.
+::setMenu		sty	RegTMenu1
+
+			lda	#BOX_OPTION
+			bit	geosDiskFlg		;GEOS-Disk?
+			bmi	:setOptV2		; => Ja, weiter...
+			lda	#BOX_OPTION_VIEW	;"GEOS-Disk V2" deaktivieren.
+::setOptV2		sta	RegTMenu1d
+endif
+
+			LoadW	r0,RegMenu1		;Zeiger auf Register-Menü.
 			jmp	ENABLE_REG_MENU		;Register-Menü starten.
+
+::err			jsr	doXRegStatus		;Disk-/Laufwerksfehler ausgeben.
+			jsr	PurgeTurbo		;TurboDOS entfernen.
 
 ;*** Zurück zum DeskTop.
 :ExitRegMenuUser	jsr	sys_LdBackScrn		;Bildschirm zurücksetzen.
@@ -212,7 +234,7 @@ endif
 ;*** Daten für Register "DISKINFO".
 :RPos1_x  = R1SizeX0 +$10
 :RPos1_y  = R1SizeY0 +$10
-:RTab1_1  = $0028
+:RTab1_1  = $0040
 :RTab1_2  = $0048
 :RLine1_1 = $00
 :RLine1_2 = $10
@@ -285,7 +307,7 @@ endif
 
 ;--- Speicherplatz.
 			b BOX_FRAME
-				w R1T06
+				w R1T08
 				w $0000
 				b RPos1_y +RLine1_4 -$05
 				b RPos1_y +RLine1_4 +$18 +$06
@@ -300,16 +322,16 @@ endif
 				w R1SizeX0 +$20
 				w R1SizeX1 -$28
 
-;--- GEOS-Disk.
-			b BOX_OPTION
-				w R1T05
-				w setReloadDir
+;--- GEOS-Format.
+:RegTMenu1e		b BOX_OPTION
+				w R1T03
+				w setOptGEOSv1
 				b RPos1_y +RLine1_3
 				w RPos1_x
 				w geosDiskFlg
 				b %11111111
 :RegTMenu1a		b BOX_NUMERIC_VIEW
-				w R1T05a
+				w R1T06
 				w $0000
 				b RPos1_y +RLine1_3
 				w R1SizeX1 -$10 -$18 -$08 -$18 +$01
@@ -323,6 +345,17 @@ endif
 				w adrBorderBlock +1
 				b 3!NUMERIC_RIGHT!NUMERIC_BYTE
 
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+:RegTMenu1d		b BOX_OPTION
+				w R1T04
+				w setOptGEOSv2
+				b RPos1_y +RLine1_3
+				w RPos1_x +RTab1_1
+				w geosDiskV2Flg
+				b %11111111
+endif
+
 ;*** Texte für Register "DISKINFO".
 if LANG = LANG_DE
 :R1T01			b "DISKETTE",NULL
@@ -330,31 +363,6 @@ if LANG = LANG_DE
 :R1T02			w RPos1_x
 			b RPos1_y +RLine1_1 +$06
 			b "Laufwerk:",NULL
-
-:R1T05			w RPos1_x +$10
-			b RPos1_y +RLine1_3 +$06
-			b "GEOS-Format",NULL
-:R1T05a			w RPos1_x +$60
-			b RPos1_y +RLine1_3 +$06
-			b "Border:",NULL
-
-:R1T06			b "SPEICHER",NULL
-
-:R1T07			w RPos1_x
-			b RPos1_y +RLine1_4 +$06
-			b "0%"
-			b GOTOXY
-			w R1SizeX1 -$28 +$04
-			b RPos1_y +RLine1_4 +$06
-			b "100%"
-			b GOTOXY
-			w R1SizeX0 +$10
-			b RPos1_y +RLine1_4 +$10
-			b "Max:"
-			b GOTOXY
-			w R1SizeX0 +$10 +$66
-			b RPos1_y +RLine1_4 +$10
-			b "Frei:",NULL
 endif
 if LANG = LANG_EN
 :R1T01			b "DISK",NULL
@@ -362,17 +370,35 @@ if LANG = LANG_EN
 :R1T02			w RPos1_x
 			b RPos1_y +RLine1_1 +$06
 			b "Drive type:",NULL
+endif
 
-:R1T05			w RPos1_x +$10
+;--- GEOS-Disk V1.
+if LANG!TEST_RAMNM_SHARED = LANG_DE!SHAREDDIR_DISABLED
+:R1T03			w RPos1_x +$0c
+			b RPos1_y +RLine1_3 +$06
+			b "GEOS-Format",NULL
+endif
+if LANG!TEST_RAMNM_SHARED = LANG_EN!SHAREDDIR_DISABLED
+:R1T03			w RPos1_x +$0c
 			b RPos1_y +RLine1_3 +$06
 			b "GEOS format",NULL
+endif
 
-:R1T05a			w RPos1_x +$60
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+:R1T03			w RPos1_x +$0c
+			b RPos1_y +RLine1_3 +$06
+			b "GEOS V1",NULL
+:R1T04			w RPos1_x +RTab1_1 +$0c
+			b RPos1_y +RLine1_3 +$06
+			b "V2",NULL
+endif
+
+:R1T06			w RPos1_x +$64
 			b RPos1_y +RLine1_3 +$06
 			b "Border:",NULL
 
-:R1T06			b "DISK SPACE",NULL
-
+;--- Speicherplatz.
 :R1T07			w RPos1_x
 			b RPos1_y +RLine1_4 +$06
 			b "0%"
@@ -384,10 +410,22 @@ if LANG = LANG_EN
 			w R1SizeX0 +$10
 			b RPos1_y +RLine1_4 +$10
 			b "Max:"
+
+if LANG = LANG_DE
+			b GOTOXY
+			w R1SizeX0 +$10 +$66
+			b RPos1_y +RLine1_4 +$10
+			b "Frei:",NULL
+
+:R1T08			b "SPEICHER",NULL
+endif
+if LANG = LANG_EN
 			b GOTOXY
 			w R1SizeX0 +$10 +$66
 			b RPos1_y +RLine1_4 +$10
 			b "Free:",NULL
+
+:R1T08			b "DISK SPACE",NULL
 endif
 
 ;*** Daten für Register "STATISTIK".
@@ -545,31 +583,43 @@ endif
 			sta	adrBorderBlock +0
 			sta	adrBorderBlock +1
 
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			sta	startUpDirTr
+			sta	startUpDirSe
+endif
+
 			tax
 ::init			sta	countFiles,x
 			inx
 			cpx	#5*2
 			bcc	:init
 
+			jsr	OpenDisk
+			txa				;Fehler?
+			bne	:error			; => Ja, Ende...
+
 			ldx	curDrive
 			lda	RealDrvMode -8,x	;Laufwerksmodus einlesen und
 			sta	targetDrvMode		;zwischenspeichern.
-
-			ldy	#< OpenDisk		;C=15x1: Diskette öffnen.
-			ldx	#> OpenDisk
-
 			and	#SET_MODE_SUBDIR	;NativeMode?
-			beq	:open			; => Nein, weiter...
+			beq	:getID			; => Nein, weiter...
 
-			ldy	#< OpenRootDir		;Native: ROOT-Verzeichnis öffnen.
-			ldx	#> OpenRootDir
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			lda	curDirHead +$20
+			sta	startUpDirTr
+			lda	curDirHead +$21
+			sta	startUpDirSe
+endif
 
-::open			tya
-			jsr	CallRoutine		;Diskette öffnen.
+			jsr	OpenRootDir		;Native: ROOT-Verzeichnis öffnen.
 			txa				;Fehler?
-			bne	:exit			; => Ja, Ende...
+			beq	:getID			; => Nein, weiter...
 
-			lda	curDirHead +162		;Aktuelle Disk-ID einlesen.
+::error			rts				;Diskfehler, Abbruch...
+
+::getID			lda	curDirHead +162		;Aktuelle Disk-ID einlesen.
 			sta	targetDrvDkID +0
 			lda	curDirHead +163
 			sta	targetDrvDkID +1
@@ -607,11 +657,21 @@ endif
 			jsr	SysCopyName
 
 			lda	isGEOS			;Status "GEOS-Diskette" kopieren.
-			sta	geosDiskFlg
-			bne	:2
-
 			tax
+			stx	geosDiskFlg
 			beq	:3
+
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			lda	curDirHead +218		;"2"
+			eor	curDirHead +219		;"."
+			eor	curDirHead +220		;"0"
+			cmp	#$2c			;"Shared/Dir" vorhanden?
+			bne	:2			; => Nein, weiter...
+
+			stx	geosDiskV2Flg
+			stx	geosDiskV2orig
+endif
 
 ::2			lda	curDirHead +171
 			ldx	curDirHead +172
@@ -904,6 +964,49 @@ endif
 			LoadW	r0,textKB		;Text "KByte" ausgeben.
 			jmp	PutString
 
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+;*** Registermenü aktualisieren.
+:setOptGEOSv2		bit	geosDiskV2Flg		;"GEOS-Disk V2"?
+			bpl	setOptGEOSv1		; => Nein, weiter...
+
+			lda	#$ff			;"GEOS-Disk V1" aktivieren.
+			sta	geosDiskFlg
+
+			LoadW	r15,RegTMenu1e		;"GEOS-Disk V1" aktualisieren.
+			jsr	RegisterUpdate
+
+:setOptGEOSv1		bit	geosDiskFlg		;GEOS-Diskette zurücksetzen?
+			bmi	:1			; => Nein, weiter...
+
+			lda	#$00			;Adresse Borderblock löschen.
+			sta	adrBorderBlock +0
+			sta	adrBorderBlock +1
+
+			LoadW	r15,RegTMenu1a		;Anzeige Borderblock
+			jsr	RegisterUpdate		;aktualisieren.
+			LoadW	r15,RegTMenu1b
+			jsr	RegisterUpdate
+
+::1			lda	#BOX_OPTION
+			bit	geosDiskFlg		;GEOS-Diskette?
+			bmi	:2			; => Ja, weiter...
+
+			lda	#NULL			;Option GEOSv2 deaktivieren.
+			sta	geosDiskV2Flg
+			lda	#BOX_OPTION_VIEW
+
+::2			sta	RegTMenu1d		;Registeroption festlegen.
+
+			LoadW	r15,RegTMenu1d		;"GEOS-Disk V2" aktualisieren.
+			jsr	RegisterUpdate
+endif
+
+;--- GEOS-Disk V1.
+if TEST_RAMNM_SHARED = SHAREDDIR_DISABLED
+:setOptGEOSv1		= setReloadDir
+endif
+
 ;*** Flag setzen "Disk aktualisieren".
 ;
 ;Wird durch das Registermenü gesetzt
@@ -918,51 +1021,107 @@ endif
 :UpdateDisk		LoadW	r10,targetDrvDisk
 			jsr	saveDiskName		;Disk-name in BAM übertragen.
 			txa				;Fehler?
-			bne	:exit			; => Ja, Abbruch...
+			bne	:err			; => Ja, Abbruch...
 
 			bit	idUpdateFlg		;Disk-ID aktualisieren ?
-			bpl	:1c			; => Nein, weiter...
+			bpl	:11			; => Nein, weiter...
 			jsr	saveDiskID		;Disk-ID/DOS-Kennung aktualisieren.
 			txa				;Fehler?
-			bne	:exit			; => Ja, Abbruch...
+			bne	:err			; => Ja, Abbruch...
 
-::1c			lda	geosDiskFlg		;GEOS-Disk-Status geändert?
-			cmp	isGEOS
-			beq	:exit			; => Nein, Ende..
+::11			lda	geosDiskFlg
+			cmp	isGEOS			;"GEOS-Disk V1"-Status geändert?
+			bne	:updDiskGEOS		; => Ja, Diskette anpassen.
 
-::updateGEOS		tax				;GEOS-Disk erstellen?
-			bne	:makeGEOS		; => Ja, weiter...
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			lda	geosDiskV2Flg
+			cmp	geosDiskV2orig		;"GEOS-Disk V2"-Status geändert?
+			bne	:testGEOSv2		; => Nein, Ende..
+endif
+
+;			ldx	#NO_ERROR		;Keine Änderung, Ende...
+::err			rts
+
+;--- GEOS-Diskette ändern.
+::updDiskGEOS		tax				;GEOS-Disk erstellen?
+			bne	:setGEOSv1		; => Ja, weiter...
 
 ::clrGEOS		jmp	delGEOSHdr		;GEOS-Disk löschen.
 
-::makeGEOS		jmp	SetGEOSDisk		;GEOS-Disk erzeugen.
+::setGEOSv1		jsr	SetGEOSDisk		;GEOS-Disk erzeugen.
+
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			txa				;GEOS-Disk erstellt?
+			bne	:exit			; => Nein, Abbruch...
+
+::testGEOSv2		bit	geosDiskV2Flg		;V2-Diskette erstellen?
+			bmi	:setGEOSv2		; => Ja, weiter...
+
+::clrGEOSv2		lda	#NULL			;V2-Kennung löschen.
+			sta	curDirHead +218
+			sta	curDirHead +219
+			sta	curDirHead +220
+			tax
+			beq	:setDirAdr
+
+::setGEOSv2		lda	#1			;Hauptverzeichnis?
+			cmp	startUpDirTr
+			bne	:21
+			cmp	startUpDirSe
+			beq	:exit			; => Ja, Ende...
+
+::21			jsr	moveBorderFiles		;Dateien im Borderblock löschen.
+			txa				;Fehler?
+			bne	:exit			; => Ja, Abbruch...
+
+			lda	startUpDirTr
+			sta	r1L
+			lda	startUpDirSe
+			sta	r1H
+			LoadW	r4,diskBlkBuf
+			jsr	GetBlock		;Verzeichnis-Header einlesen.
+			txa				;Fehler?
+			bne	:exit			; => Ja, Abbruch...
+
+			lda	#"2"			;"GEOS-Disk V2"-Kennung erzeugen.
+			sta	curDirHead +218
+			lda	#"."
+			sta	curDirHead +219
+			lda	#"0"
+			sta	curDirHead +220
+
+			lda	diskBlkBuf +0		;Zeiger auf Shared/Dir setzen.
+			ldx	diskBlkBuf +1
+
+::setDirAdr		sta	curDirHead +203
+			stx	curDirHead +204
+
+			jsr	PutDirHead		;Disk-Header aktualisieren.
+;			txa				;Fehler?
+;			bne	:exit			; => Ja, Abbruch...
+endif
 
 ::exit			rts				;Ende.
 
-;*** BorderBlock: GEOS-Header löschen.
-:delGEOSHdr		ldx	curDirHead +171		;Border-Block vorhanden?
-			beq	:1			; => Nein, weiter...
-			stx	r1L
-			lda	curDirHead +172
-			sta	r1H
-			LoadW	r4,borderBlock
-			jsr	GetBlock		;Border-Block einlesen.
-			txa				;Fehler?
-			bne	:3			; => Ja, Abbruch...
-
-			jsr	moveBorderFiles		;Dateien im BorderBlock löschen.
+;*** Borderblock: GEOS-Header löschen.
+:delGEOSHdr		jsr	moveBorderFiles		;Dateien im Borderblock löschen.
 			txa				;Fehler?
 			bne	:3			; => Ja, Abbruch...
 
 			lda	curDirHead +171
+			beq	:1			; => Nein, weiter...
 			sta	r6L
 			lda	curDirHead +172
 			sta	r6H
-			jsr	FreeBlock		;BorderBlock freigeben.
+			jsr	FreeBlock		;Borderblock freigeben.
 			txa				;Fehler?
 			bne	:3			; => Ja, Abbruch...
 
 ::1			lda	#$00			;GEOS-Kennung löschen.
+			sta	isGEOS
+
 			ldy	#173
 ::2			sta	curDirHead,y
 			iny
@@ -974,25 +1133,45 @@ endif
 			sta	curDirHead +172
 			sta	curDirHead +189		;Diskettentyp löschen.
 
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+			sta	curDirHead +218		;"GEOS-Disk V2"-Kennung löschen.
+			sta	curDirHead +219
+			sta	curDirHead +220
+
+			sta	curDirHead +203		;Adresse Shared/Dir löschen.
+			sta	curDirHead +204
+endif
+
 			jsr	PutDirHead		;BAM speichern.
 ;			txa				;Fehler?
 ;			bne	:3			; => Ja, Abbruch...
 
 ::3			rts				;Abbruch...
 
-;*** BorderBlock: Dateien retten.
-:moveBorderFiles	lda	#$00			;Zeiger auf Verzeichnisanfang.
-			sta	r10L
+;*** Borderblock: Dateien retten.
+:moveBorderFiles	ldx	curDirHead +171		;Borderblock vorhanden?
+			beq	:exit			; => Nein, weiter...
+			stx	r1L
+			lda	curDirHead +172
+			sta	r1H
+			LoadW	r4,borderBlock
+			jsr	GetBlock		;Borderblock einlesen.
+			txa				;Fehler?
+			bne	:exit			; => Ja, Abbruch...
 
-			ldx	#2
-::loop			stx	r10H
+			lda	#$ff
+			sta	r10L			;Update-Flag Borderblock löschen.
 
-			lda	borderBlock,x		;Datei belegt?
+			ldy	#2			;Zeiger auf ersten Eintrag.
+::loop			sty	r10H
+
+			lda	borderBlock,y		;Datei belegt?
 			beq	:next			; => Nein, weiter...
 
 			jsr	GetFreeDirBlk		;Freien Eintrag suchen.
 			txa				;Fehler?
-			bne	:exit			; => Ja, Abbruch...
+			bne	:done			; => Ja, Abbruch...
 
 			lda	#30
 			sta	r0L
@@ -1000,6 +1179,8 @@ endif
 			ldx	r10H
 ::copy			lda	borderBlock,x		;Verzeichniseintrag vom Borderblock
 			sta	diskBlkBuf,y		;in Verzeichnis verschieben.
+			lda	#$00			;Eintrag im Borderblock löschen.
+			sta	borderBlock,x
 			inx
 			iny
 			dec	r0L
@@ -1008,19 +1189,41 @@ endif
 ;			LoadW	r4,diskBlkBuf
 			jsr	PutBlock		;Verzeichnisblock aktualisieren.
 			txa				;Fehler?
-			bne	:exit			; => Ja, Abbruch...
+			bne	:done			; => Ja, Abbruch...
+
+			sta	r10L			;Borderblock aktualisieren.
 
 ::next			lda	r10H
 			clc
 			adc	#32			;Zeiger auf nächste Datei.
-			tax				;Letzte Datei?
+			tay				;Letzte Datei?
 			bcc	:loop			; => Nein, weiter...
+
+::done			bit	r10L			;Dateien verschoben?
+			bmi	:exit			; => Nein, weiter...
+
+			txa				;Fehlerstatus speichern.
+			pha
+
+			lda	curDirHead +171
+			sta	r1L
+			lda	curDirHead +172
+			sta	r1H
+			LoadW	r4,borderBlock
+			jsr	PutBlock		;Borderblock aktualisieren.
+
+			pla
+			cpx	#NO_ERROR		;Borderblock gespeichert?
+			bne	:exit			; => Nein, Abbruch...
+
+			tax				;Alle Dateien verschoben?
+;			bne	:exit			; => Nein, Abbruch...
 
 ;			jsr	PutDirHead		;BAM aktualisieren -> ":delGEOSHdr".
 ;			txa				;Fehler?
 ;			bne	:exit			; => Ja, Abbruch...
 
-			ldx	#NO_ERROR
+;			ldx	#NO_ERROR
 ::exit			rts				;Ende.
 
 ;*** Disk-ID geändert.
@@ -1383,6 +1586,15 @@ endif
 :dosReadyFlg		b $00
 :geosDiskFlg		b $00
 
+;--- GEOS-Disk V2.
+if TEST_RAMNM_SHARED = SHAREDDIR_ENABLED
+:geosDiskV2Flg		b $00
+:geosDiskV2orig		b $00
+
+:startUpDirTr		b $00
+:startUpDirSe		b $00
+endif
+
 :textBlks		b " Blks",NULL
 :textKB			b " Kb",NULL
 :textSpacer		b " / ",NULL
@@ -1439,5 +1651,5 @@ endif
 :sysMemS		= (sysMemE - sysMemA)
 
 ;******************************************************************************
-			g LOAD_REGISTER - sysMemS
+			g RegMenuBase - sysMemS
 ;******************************************************************************

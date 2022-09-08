@@ -22,7 +22,7 @@
 
 ;*** Statische Datumsangabe für Build-Info.
 ;Benutzerdefiniert: DDMMYY:HHMM
-			b "200822"			;Statisches Datum vorgeben.
+			b "060922"			;Statisches Datum vorgeben.
 
 ;*** SnapShots immer mit Uhrzeit.
 			b ":"
